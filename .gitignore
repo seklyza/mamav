@@ -16,3 +16,6 @@ config/ide-helper.php
 _ide_helper.php
 .phpstorm.meta.php
 _ide_helper_models.php
+
+public/js/app.js
+public/css/app.css
