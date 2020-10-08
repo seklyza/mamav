@@ -49,20 +49,10 @@
     <div class="text-center pt-12 pb-12">
       <p>
         Already have an account?
-        <inertia-link :href="routes.login" class="underline font-semibold">
+        <inertia-link :href="$route('pages.login')" class="underline font-semibold">
           Log in here.
         </inertia-link>
       </p>
     </div>
   </auth-layout>
 </template>
-
-<script>
-export default {
-  computed: {
-    routes: () => ({
-      login: route('pages.login'),
-    }),
-  },
-}
-</script>

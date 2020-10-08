@@ -5,7 +5,7 @@
         <div
           class="flex justify-center md:justify-start pt-12 md:pl-12 md:-mb-12"
         >
-          <inertia-link :href="routes.index" class="p-4">
+          <inertia-link :href="$route('index')" class="p-4">
             <img src="/svg/monochrome-logo.svg" width="90" />
           </inertia-link>
         </div>
@@ -26,13 +26,3 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  computed: {
-    routes: () => ({
-      index: route('index'),
-    }),
-  },
-}
-</script>

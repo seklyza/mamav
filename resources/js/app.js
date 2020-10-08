@@ -6,6 +6,12 @@ import Vue from 'vue'
 InertiaProgress.init()
 Vue.use(InertiaApp)
 
+Vue.mixin({
+  methods: {
+    $route: (...args) => window.route(...args)
+  }
+})
+
 const files = require.context('./components/base', true, /\.vue$/i)
 files.keys().map(key =>
   Vue.component(

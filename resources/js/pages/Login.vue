@@ -28,20 +28,10 @@
     <div class="text-center pt-12 pb-12">
       <p>
         Don't have an account?
-        <inertia-link :href="routes.register" class="underline font-semibold">
+        <inertia-link :href="$route('pages.register')" class="underline font-semibold">
           Register here.
         </inertia-link>
       </p>
     </div>
   </auth-layout>
 </template>
-
-<script>
-export default {
-  computed: {
-    routes: () => ({
-      register: route('pages.register'),
-    }),
-  },
-}
-</script>
