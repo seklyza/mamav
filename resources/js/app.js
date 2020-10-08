@@ -2,14 +2,16 @@ import './bootstrap'
 import { InertiaApp } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress'
 import Vue from 'vue'
+import VueCompositionAPI from '@vue/composition-api'
 
 InertiaProgress.init()
 Vue.use(InertiaApp)
+Vue.use(VueCompositionAPI)
 
 Vue.mixin({
   methods: {
-    $route: (...args) => window.route(...args)
-  }
+    $route: (...args) => window.route(...args),
+  },
 })
 
 const files = require.context('./components/base', true, /\.vue$/i)

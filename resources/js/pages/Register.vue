@@ -7,7 +7,7 @@
         <input
           type="text"
           id="name"
-          placeholder="John Smith"
+          placeholder="Name"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
           autocomplete="off"
         />
@@ -18,7 +18,18 @@
         <input
           type="email"
           id="email"
-          placeholder="your@email.com"
+          placeholder="Email"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="flex flex-col pt-4">
+        <label for="username" class="text-lg">Username</label>
+        <input
+          type="username"
+          id="username"
+          placeholder="Username"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
           autocomplete="off"
         />
@@ -49,7 +60,10 @@
     <div class="text-center pt-12 pb-12">
       <p>
         Already have an account?
-        <inertia-link :href="$route('pages.login')" class="underline font-semibold">
+        <inertia-link
+          :href="$route('pages.login')"
+          class="underline font-semibold"
+        >
           Log in here.
         </inertia-link>
       </p>
