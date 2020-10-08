@@ -64,56 +64,34 @@
 <script>
 import { defineComponent, reactive, toRefs } from '@vue/composition-api'
 
+import { useForm } from '../hooks/useForm'
+
 export default defineComponent({
   setup(_, { root: { $inertia } }) {
-    const state = reactive({
-      form: {
-        isValid: true,
-        username: {
-          val: '',
-          error: null,
-        },
-        password: {
-          val: '',
-          error: null,
-        },
-      },
-    })
-
-    function clearValidity(input) {
-      state.form[input].error = null
-    }
-
-    function validateForm() {
-      state.form.isValid = true
-      if (state.form.username.val === '') {
-        state.form.isValid = false
-        state.form.username.error = 'The username field is required'
-      }
-      if (state.form.password.val === '') {
-        state.form.isValid = false
-        state.form.password.error = 'The password field is required'
-      }
-    }
+    const { form, clearValidity, handleSubmit } = useForm(
+      [
+        'username',
+        '',
+        val => (val === '' ? 'The username field is required' : false),
+      ],
+      [
+        'password',
+        '',
+        val => (val === '' ? 'The password field is required' : false),
+      ],
+    )
 
     function onSubmit() {
-      validateForm()
-
-      if (!state.form.isValid) return
-
-      const formData = {
-        username: state.form.username.val,
-        password: state.form.password.val,
-      }
+      const formData = handleSubmit()
+      if (!formData) return
 
       $inertia.post(route('pages.login'), formData)
     }
 
     return {
-      ...toRefs(state),
+      form,
 
       clearValidity,
-      validateForm,
       onSubmit,
     }
   },
