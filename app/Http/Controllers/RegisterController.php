@@ -43,6 +43,6 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect()->intended(route('index'));
+        return inertia('Register', ['success' => 'Please check your email!']);
     }
 }
