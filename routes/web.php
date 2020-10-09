@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', fn () => redirect()->route('pages.login'))->name('index');
+
 Route::get('/login', [LoginController::class, 'index'])->name('pages.login');
 Route::post('/login', [LoginController::class, 'store'])->name('pages.login');
-Route::inertia('/register', 'Register')->name('pages.register');
+
+Route::get('/register', [RegisterController::class, 'index'])->name('pages.register');

@@ -2,48 +2,22 @@
   <auth-layout>
     <p class="text-center text-3xl">Login to MaMaV</p>
     <form class="flex flex-col pt-3 md:pt-8" @submit.prevent="onSubmit">
-      <div class="flex flex-col pt-4">
-        <label for="username" class="text-lg">Username</label>
-        <input
-          type="text"
-          id="username"
-          placeholder="Username"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-          :class="{
-            'border-red-700': form.username.error || $page.errors.username,
-          }"
-          autocomplete="off"
-          v-model.trim="form.username.val"
-          @blur="clearValidity('username')"
-        />
-        <p
-          v-if="form.username.error || $page.errors.username"
-          class="text-red-700"
-        >
-          {{ form.username.error || $page.errors.username }}
-        </p>
-      </div>
+      <form-input
+        name="username"
+        label="Username"
+        v-model.trim="form.username.val"
+        :error="form.username.error"
+        @clear-validity="clearValidity"
+      ></form-input>
 
-      <div class="flex flex-col pt-4">
-        <label for="password" class="text-lg">Password</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="Password"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-          :class="{
-            'border-red-700': form.password.error || $page.errors.password,
-          }"
-          v-model.trim="form.password.val"
-          @blur="clearValidity('password')"
-        />
-        <p
-          v-if="form.password.error || $page.errors.password"
-          class="text-red-700"
-        >
-          {{ form.password.error || $page.errors.password }}
-        </p>
-      </div>
+      <form-input
+        type="password"
+        name="password"
+        label="Password"
+        v-model.trim="form.password.val"
+        :error="form.password.error"
+        @clear-validity="clearValidity"
+      ></form-input>
 
       <base-button>Log In</base-button>
     </form>
@@ -64,9 +38,13 @@
 <script>
 import { defineComponent, reactive, toRefs } from '@vue/composition-api'
 
+import FormInput from '../components/auth/FormInput.vue'
 import { useForm } from '../hooks/useForm'
 
 export default defineComponent({
+  components: {
+    FormInput,
+  },
   setup(_, { root: { $inertia } }) {
     const { form, clearValidity, handleSubmit } = useForm(
       [

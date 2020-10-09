@@ -1,59 +1,48 @@
 <template>
   <auth-layout>
     <p class="text-center text-3xl">Register to MaMaV</p>
-    <form class="flex flex-col pt-3 md:pt-8" onsubmit="event.preventDefault();">
-      <div class="flex flex-col pt-4">
-        <label for="name" class="text-lg">Name</label>
-        <input
-          type="text"
-          id="name"
-          placeholder="Name"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-          autocomplete="off"
-        />
-      </div>
+    <form class="flex flex-col pt-3 md:pt-8" @submit.prevent="onSubmit">
+      <form-input
+        name="name"
+        label="Name"
+        v-model.trim="form.name.val"
+        :error="form.name.error"
+        @clear-validity="clearValidity"
+      ></form-input>
 
-      <div class="flex flex-col pt-4">
-        <label for="email" class="text-lg">Email</label>
-        <input
-          type="email"
-          id="email"
-          placeholder="Email"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-          autocomplete="off"
-        />
-      </div>
+      <form-input
+        name="email"
+        label="Email"
+        v-model.trim="form.email.val"
+        :error="form.email.error"
+        @clear-validity="clearValidity"
+      ></form-input>
 
-      <div class="flex flex-col pt-4">
-        <label for="username" class="text-lg">Username</label>
-        <input
-          type="username"
-          id="username"
-          placeholder="Username"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-          autocomplete="off"
-        />
-      </div>
+      <form-input
+        name="username"
+        label="Username"
+        v-model.trim="form.username.val"
+        :error="form.username.error"
+        @clear-validity="clearValidity"
+      ></form-input>
 
-      <div class="flex flex-col pt-4">
-        <label for="password" class="text-lg">Password</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="Password"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-        />
-      </div>
+      <form-input
+        type="password"
+        name="password"
+        label="Password"
+        v-model.trim="form.password.val"
+        :error="form.password.error"
+        @clear-validity="clearValidity"
+      ></form-input>
 
-      <div class="flex flex-col pt-4">
-        <label for="confirm-password" class="text-lg">Confirm Password</label>
-        <input
-          type="password"
-          id="confirm-password"
-          placeholder="Password"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-        />
-      </div>
+      <form-input
+        type="password"
+        name="confirmPassword"
+        label="Confirm Password"
+        v-model.trim="form.confirmPassword.val"
+        :error="form.confirmPassword.error"
+        @clear-validity="clearValidity"
+      ></form-input>
 
       <base-button>Register</base-button>
     </form>
@@ -70,3 +59,55 @@
     </div>
   </auth-layout>
 </template>
+
+<script>
+import { defineComponent } from '@vue/composition-api'
+import { useForm } from '../hooks/useForm'
+
+import FormInput from '../components/auth/FormInput.vue'
+
+export default defineComponent({
+  components: {
+    FormInput,
+  },
+  setup() {
+    const { form, clearValidity, handleSubmit } = useForm(
+      ['name', '', val => (val === '' ? 'The name field is required' : false)],
+      [
+        'email',
+        '',
+        val => (val === '' ? 'The e-mail field is required' : false),
+      ],
+      [
+        'username',
+        '',
+        val => (val === '' ? 'The username field is required' : false),
+      ],
+      [
+        'password',
+        '',
+        val => (val === '' ? 'The password field is required' : false),
+      ],
+      [
+        'confirmPassword',
+        '',
+        val => (val === '' ? 'The confirm password field is required' : false),
+      ],
+    )
+
+    function onSubmit() {
+      const formData = handleSubmit()
+      if (!formData) return
+
+      console.log(formData)
+    }
+
+    return {
+      form,
+
+      clearValidity,
+      onSubmit,
+    }
+  },
+})
+</script>
