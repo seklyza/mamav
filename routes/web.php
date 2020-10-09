@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,9 +18,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => redirect()->route('dashboard'))->name('index');
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::inertia('/dashboard', 'Dashboard')->name('dashboard');
 });
+
+Route::inertia('/email/verify', 'VerifyEmail')->middleware('auth')->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    /** @var \App\Models\User */ $user = $request->user();
+    if ($user->email_verified_at) {
+        return redirect()->route('login');
+    }
+
+    $request->fulfill();
+
+    return redirect()->route('index');
+})->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login');

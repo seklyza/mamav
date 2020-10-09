@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Auth;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -37,6 +38,8 @@ class RegisterController extends Controller
                 return back()->with(['message' => 'Username/email is already taken.']);
             }
         }
+
+        event(new Registered($user));
 
         Auth::login($user);
 
