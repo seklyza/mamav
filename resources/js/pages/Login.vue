@@ -1,10 +1,12 @@
 <template>
   <auth-layout>
     <p class="text-center text-3xl">Login to MaMaV</p>
-    <error-alert
+    <base-alert
       v-if="$page.flash.message"
-      :error="$page.flash.message"
-    ></error-alert>
+      color="red"
+      message1="Could not login:"
+      :message2="$page.flash.message"
+    ></base-alert>
     <form class="flex flex-col pb-3 md:pb-8" @submit.prevent="onSubmit">
       <form-input
         name="username"
@@ -43,13 +45,11 @@
 import { defineComponent, reactive, toRefs } from '@vue/composition-api'
 
 import FormInput from '../components/auth/FormInput.vue'
-import ErrorAlert from '../components/auth/ErrorAlert.vue'
 import { useForm } from '../hooks/useForm'
 
 export default defineComponent({
   components: {
     FormInput,
-    ErrorAlert,
   },
   setup(_, { root: { $inertia } }) {
     const { form, clearValidity, handleSubmit } = useForm(
