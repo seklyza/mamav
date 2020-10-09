@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Auth;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
@@ -20,12 +23,23 @@ class RegisterController extends Controller
             'password' => 'string|required|confirmed|min:6',
             'password_confirmation' => 'string|required',
         ]);
-        /** @var string */ $name = $data['name'];
-        /** @var string */ $email = $data['email'];
-        /** @var string */ $username = $data['username'];
-        /** @var string */ $password = $data['password'];
-        /** @var string */ $passwordConfirmation = $data['password_confirmation'];
 
-        return $this->index();
+        try {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'username' => $data['username'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+            ]);
+        } catch (QueryException $ex) {
+            if ($ex->errorInfo[0] === "23000") {
+                return back()->with(['message' => 'Username/email is already taken.']);
+            }
+        }
+
+        Auth::login($user);
+
+        return redirect()->intended(route('index'));
     }
 }

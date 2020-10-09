@@ -1,6 +1,10 @@
 <template>
   <auth-layout>
     <p class="text-center text-3xl">Register to MaMaV</p>
+    <error-alert
+      v-if="$page.flash.message"
+      :error="$page.flash.message"
+    ></error-alert>
     <form class="flex flex-col pt-3 md:pt-8" @submit.prevent="onSubmit">
       <form-input
         name="name"
@@ -64,10 +68,12 @@
 import { defineComponent } from '@vue/composition-api'
 import { useForm } from '../hooks/useForm'
 
+import ErrorAlert from '../components/auth/ErrorAlert.vue'
 import FormInput from '../components/auth/FormInput.vue'
 
 export default defineComponent({
   components: {
+    ErrorAlert,
     FormInput,
   },
   setup(_, { root: { $inertia } }) {
