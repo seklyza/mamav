@@ -29,7 +29,7 @@
       <p>
         Don't have an account?
         <inertia-link
-          :href="$route('pages.register')"
+          :href="$route('register')"
           class="underline font-semibold"
         >
           Register here.
@@ -69,7 +69,7 @@ export default defineComponent({
       const formData = handleSubmit()
       if (!formData) return
 
-      $inertia.post(route('pages.login'), formData)
+      $inertia.post(route('login.store'), formData)
     }
 
     return {
