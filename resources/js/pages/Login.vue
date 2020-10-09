@@ -1,5 +1,6 @@
 <template>
   <auth-layout>
+    {{ $page }}
     <p class="text-center text-3xl">Login to MaMaV</p>
     <form class="flex flex-col pt-3 md:pt-8" @submit.prevent="onSubmit">
       <form-input

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
+use Session;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,12 @@ class AppServiceProvider extends ServiceProvider
     {
         Inertia::version(function () {
             return md5_file(public_path('mix-manifest.json'));
+        });
+
+        Inertia::share('flash', function () {
+            return [
+                'message' => Session::get('message')
+            ];
         });
     }
 }

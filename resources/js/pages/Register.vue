@@ -37,10 +37,10 @@
 
       <form-input
         type="password"
-        name="confirmPassword"
+        name="password_confirmation"
         label="Confirm Password"
-        v-model.trim="form.confirmPassword.val"
-        :error="form.confirmPassword.error"
+        v-model.trim="form.password_confirmation.val"
+        :error="form.password_confirmation.error"
         @clear-validity="clearValidity"
       ></form-input>
 
@@ -70,7 +70,7 @@ export default defineComponent({
   components: {
     FormInput,
   },
-  setup() {
+  setup(_, { root: { $inertia } }) {
     const { form, clearValidity, handleSubmit } = useForm(
       ['name', '', val => (val === '' ? 'The name field is required' : false)],
       [
@@ -89,7 +89,7 @@ export default defineComponent({
         val => (val === '' ? 'The password field is required' : false),
       ],
       [
-        'confirmPassword',
+        'password_confirmation',
         '',
         val => (val === '' ? 'The confirm password field is required' : false),
       ],
@@ -99,7 +99,7 @@ export default defineComponent({
       const formData = handleSubmit()
       if (!formData) return
 
-      console.log(formData)
+      $inertia.post(route('pages.register'), formData)
     }
 
     return {

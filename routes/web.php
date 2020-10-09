@@ -15,9 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', fn () => redirect()->route('pages.login'))->name('index');
+Route::get('/', fn () => redirect()->route('pages.dashboard'))->name('index');
 
-Route::get('/login', [LoginController::class, 'index'])->name('pages.login');
-Route::post('/login', [LoginController::class, 'store'])->name('pages.login');
+Route::group(['middleware' => 'auth'], function () {
+    Route::inertia('/dashboard', 'Dashboard')->name('pages.dashboard');
+});
 
-Route::get('/register', [RegisterController::class, 'index'])->name('pages.register');
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/login', [LoginController::class, 'index'])->name('pages.login');
+    Route::post('/login', [LoginController::class, 'store'])->name('pages.login');
+
+    Route::get('/register', [RegisterController::class, 'index'])->name('pages.register');
+    Route::post('/register', [RegisterController::class, 'store'])->name('pages.register');
+});
