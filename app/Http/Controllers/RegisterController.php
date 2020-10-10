@@ -30,7 +30,6 @@ class RegisterController extends Controller
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'username' => $data['username'],
-                'email' => $data['email'],
                 'password' => bcrypt($data['password']),
             ]);
         } catch (QueryException $ex) {
@@ -43,6 +42,6 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return inertia('Register', ['success' => 'Please check your email!']);
+        return redirect()->route('verification.notice');
     }
 }

@@ -23,7 +23,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::inertia('/dashboard', 'Dashboard')->name('dashboard');
 });
 
-Route::inertia('/register/verify', 'Register', ['success' => 'Pease check your email!'])->middleware(['auth'])->name('verification.notice');
+Route::inertia('/register/verify', 'Register', ['success' => 'Please check your email!'])->middleware(['auth'])->name('verification.notice');
 Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verifyEmail'])->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::group(['middleware' => 'guest'], function () {
