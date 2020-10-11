@@ -10,7 +10,7 @@
     <base-alert
       v-if="$page.success"
       color="green"
-      message1="Hoorah!"
+      message1="Hooray!"
       :message2="$page.success"
     ></base-alert>
     <form class="flex flex-col pt-3 md:pt-8" @submit.prevent="onSubmit">
@@ -108,7 +108,7 @@ export default defineComponent({
       const formData = handleSubmit()
       if (!formData) return
 
-      if(!route().current('register')) {
+      if (!route().current('register')) {
         $inertia.post(route('register.store'), formData)
       }
     }
