@@ -61,7 +61,7 @@
     <div class="text-center pt-12 pb-12">
       <p>
         Already have an account?
-        <inertia-link :href="$route('login')" class="underline font-semibold">
+        <inertia-link :href="route('login')" class="underline font-semibold">
           Log in here.
         </inertia-link>
       </p>
@@ -72,6 +72,7 @@
 <script>
 import { defineComponent } from '@vue/composition-api'
 import { useForm } from '../hooks/useForm'
+import { Inertia } from '@inertiajs/inertia'
 
 import FormInput from '../components/auth/FormInput.vue'
 
@@ -79,7 +80,7 @@ export default defineComponent({
   components: {
     FormInput,
   },
-  setup(_, { root: { $inertia } }) {
+  setup() {
     const { form, clearValidity, handleSubmit } = useForm(
       ['name', '', val => (val === '' ? 'The name field is required' : false)],
       [
@@ -109,7 +110,7 @@ export default defineComponent({
       if (!formData) return
 
       if (!route().current('register')) {
-        $inertia.post(route('register.store'), formData)
+        Inertia.post(route('register.store'), formData)
       }
     }
 

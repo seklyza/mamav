@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegisterController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +21,7 @@ Route::get('/', fn () => redirect()->route('dashboard'))->name('index');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::inertia('/dashboard', 'Dashboard')->name('dashboard');
+    Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
 Route::inertia('/register/verify', 'Register', ['success' => 'Please check your email!'])->middleware(['auth'])->name('verification.notice');

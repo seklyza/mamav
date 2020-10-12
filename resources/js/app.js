@@ -10,7 +10,7 @@ Vue.use(VueCompositionAPI)
 
 Vue.mixin({
   methods: {
-    $route: (...args) => window.route(...args),
+    route: window.route,
   },
 })
 
