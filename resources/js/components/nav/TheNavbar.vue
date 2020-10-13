@@ -29,13 +29,15 @@
       :class="menuExpanded ? 'block' : 'hidden'"
     >
       <div class="text-sm lg:flex-grow">
-        <a
-          href="javascript:void(0)"
-          class="block mt-4 lg:inline-block lg:mt-0 hover:text-white mr-4"
-          :class="route().current('dashboard') ? 'text-white' : 'text-gray-400'"
-        >
-          Events
-        </a>
+        <nav-link to="dashboard">
+          Upcoming Events
+        </nav-link>
+        <nav-link to="my-events">
+          My Events
+        </nav-link>
+        <nav-link to="settings">
+          Settings
+        </nav-link>
       </div>
       <div>
         <button
@@ -52,7 +54,12 @@
 <script>
 import { Inertia } from '@inertiajs/inertia'
 
+import NavLink from './NavLink'
+
 export default {
+  components: {
+    NavLink,
+  },
   data() {
     return {
       menuExpanded: false,

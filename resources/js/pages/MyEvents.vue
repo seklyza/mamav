@@ -1,5 +1,5 @@
 <template>
   <main-layout>
-    <h1>Dashboard</h1>
+    <h1>My Events</h1>
   </main-layout>
 </template>
