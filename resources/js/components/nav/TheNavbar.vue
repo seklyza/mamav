@@ -35,6 +35,9 @@
         <nav-link to="my-events">
           My Events
         </nav-link>
+        <nav-link to="previous-events">
+          Previous Events
+        </nav-link>
         <nav-link to="settings">
           Settings
         </nav-link>

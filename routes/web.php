@@ -23,7 +23,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::inertia('/dashboard', 'Dashboard')->name('dashboard');
     Route::inertia('/settings', 'Settings')->name('settings');
     Route::inertia('/my-events', 'MyEvents')->name('my-events');
-    Route::inertia('/previous-events', 'PreviousEvents')->name('my-events');
+    Route::inertia('/previous-events', 'PreviousEvents')->name('previous-events');
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
