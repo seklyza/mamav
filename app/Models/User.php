@@ -41,4 +41,14 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function ownedEvents()
+    {
+        return $this->hasMany(Event::class, 'organizer_id', 'id');
+    }
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class, 'event_participant', 'participant_id', 'event_id')->withTimestamps();
+    }
 }
