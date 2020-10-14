@@ -1,5 +1,5 @@
 <template>
-  <main-layout>
+  <main-layout :title="title">
     <ul>
       <event-card
         v-for="event in events"
@@ -17,6 +17,6 @@ export default {
   components: {
     EventCard,
   },
-  props: ['events'],
+  props: ['title', 'events'],
 }
 </script>

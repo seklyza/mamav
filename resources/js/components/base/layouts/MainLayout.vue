@@ -14,5 +14,13 @@ export default {
   components: {
     TheNavbar,
   },
+  props: ['title'],
+  created() {
+    if (this.title) {
+      document.title = `${this.title} - MaMaV`
+    } else {
+      document.title = 'MaMaV'
+    }
+  },
 }
 </script>

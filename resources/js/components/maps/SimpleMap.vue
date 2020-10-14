@@ -1,10 +1,15 @@
 <template>
-  <div ref="map" class="map"></div>
+  <div ref="map" class="map" v-show="showMap"></div>
 </template>
 
 <script>
 export default {
   props: ['location'],
+  data() {
+    return {
+      showMap: false,
+    }
+  },
   async mounted() {
     const geocoder = new google.maps.Geocoder()
     geocoder.geocode({ address: this.location }, results => {
@@ -25,6 +30,8 @@ export default {
         position: loc,
         map,
       })
+
+      this.showMap = true
     })
   },
 }
@@ -32,7 +39,6 @@ export default {
 
 <style scoped>
 .map {
-  height: 600px;
-  width: 600px;
+  height: 400px;
 }
 </style>

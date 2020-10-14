@@ -1,7 +1,8 @@
 <template>
   <li class="mb-6 w-full">
     <div class="max-w-6xl rounded overflow-hidden shadow-lg w-full">
-      <img class="w-full" :src="image_url" alt="Sunset in the mountains" />
+      <!-- <img class="w-full" :src="image_url" alt="Sunset in the mountains" /> -->
+      <simple-map :location="location" class="w-full"></simple-map>
       <div class="px-6 py-4">
         <div class="font-bold text-xl mb-2">{{ name }}</div>
         <p class="text-gray-700 text-base">
@@ -15,11 +16,7 @@
         >
         <span
           class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-          >#travel</span
-        >
-        <span
-          class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-          >#winter</span
+          >{{ location }}</span
         >
       </div>
     </div>
@@ -29,7 +26,12 @@
 <script>
 import dayjs from 'dayjs'
 
+import SimpleMap from '../maps/SimpleMap'
+
 export default {
+  components: {
+    SimpleMap,
+  },
   props: {
     id: Number,
     name: String,

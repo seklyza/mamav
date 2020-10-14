@@ -18,13 +18,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', fn () => redirect()->route('dashboard'))->name('index');
+Route::get('/', fn () => redirect()->route('upcoming-events'))->name('index');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
-    Route::get('/dashboard', [EventsController::class, 'upcomingEvents'])->name('dashboard');
+    Route::get('/upcoming-events', [EventsController::class, 'upcomingEvents'])->name('upcoming-events');
+    Route::get('/my-events', [EventsController::class, 'myEvents'])->name('my-events');
+    Route::get('/previous-events', [EventsController::class, 'previousEvents'])->name('previous-events');
     Route::inertia('/settings', 'Settings')->name('settings');
-    Route::inertia('/my-events', 'MyEvents')->name('my-events');
-    Route::inertia('/previous-events', 'PreviousEvents')->name('previous-events');
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
