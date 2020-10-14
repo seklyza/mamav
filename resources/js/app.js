@@ -1,4 +1,5 @@
 import './bootstrap'
+import GoogleMapsAPILoader from 'google-maps-api-loader'
 import { InertiaApp } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress'
 import Vue from 'vue'
@@ -27,7 +28,7 @@ files.keys().map(key =>
 
 const app = document.getElementById('app')
 
-new Vue({
+const vueApp = new Vue({
   render: h =>
     h(InertiaApp, {
       props: {
@@ -35,4 +36,14 @@ new Vue({
         resolveComponent: name => require(`./pages/${name}`).default,
       },
     }),
-}).$mount(app)
+})
+
+async function main() {
+  await GoogleMapsAPILoader({
+    apiKey: process.env.MIX_GOOGLE_MAPS_API_TOKEN,
+  })
+
+  vueApp.$mount(app)
+}
+
+main()
