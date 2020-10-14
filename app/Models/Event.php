@@ -12,8 +12,7 @@ class Event extends Model
     protected $fillable = [
         'name',
         'description',
-        'lat',
-        'long',
+        'location',
     ];
 
     public function organizer()

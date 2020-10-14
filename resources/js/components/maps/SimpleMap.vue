@@ -3,22 +3,28 @@
 </template>
 
 <script>
-import GoogleMapsAPILoader from 'google-maps-api-loader'
-
 export default {
-  props: ['lat', 'long'],
+  props: ['location'],
   async mounted() {
-    const loc = { lat: this.lat, lng: this.long }
-    const map = new google.maps.Map(this.$refs.map, {
-      center: loc,
-      zoom: 16,
-      disableDefaultUI: true,
-      clickableIcons: false,
-    })
+    const geocoder = new google.maps.Geocoder()
+    geocoder.geocode({ address: this.location }, results => {
+      if (!results.length) return
 
-    new google.maps.Marker({
-      position: loc,
-      map,
+      const loc = {
+        lat: results[0].geometry.location.lat(),
+        lng: results[0].geometry.location.lng(),
+      }
+      const map = new google.maps.Map(this.$refs.map, {
+        center: loc,
+        zoom: 16,
+        disableDefaultUI: true,
+        clickableIcons: false,
+      })
+
+      new google.maps.Marker({
+        position: loc,
+        map,
+      })
     })
   },
 }

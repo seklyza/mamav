@@ -18,8 +18,7 @@ class CreateEventsTable extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->dateTime('datetime');
-            $table->decimal('lat', 10, 7); // latitude
-            $table->decimal('long', 10, 7); // longitude
+            $table->string('location')->nullable();
             $table->foreignId('organizer_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

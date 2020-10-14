@@ -1,5 +1,4 @@
 import './bootstrap'
-import GoogleMapsAPILoader from 'google-maps-api-loader'
 import { InertiaApp } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress'
 import Vue from 'vue'
@@ -38,12 +37,11 @@ const vueApp = new Vue({
     }),
 })
 
-async function main() {
-  await GoogleMapsAPILoader({
-    apiKey: process.env.MIX_GOOGLE_MAPS_API_TOKEN,
-  })
+const mapsAPI = document.createElement('script')
+mapsAPI.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.MIX_GOOGLE_MAPS_API_TOKEN}&callback=initMap`
+mapsAPI.defer = true
+document.body.appendChild(mapsAPI)
 
+window.initMap = async function() {
   vueApp.$mount(app)
 }
-
-main()

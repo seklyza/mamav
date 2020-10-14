@@ -25,8 +25,7 @@ class EventFactory extends Factory
             'name' => $this->faker->sentence(4),
             'description' => $this->faker->paragraph(2),
             'datetime' => $this->faker->dateTime,
-            'lat' => $this->faker->latitude,
-            'long' => $this->faker->longitude,
+            'location' => $this->faker->address
         ];
     }
 }

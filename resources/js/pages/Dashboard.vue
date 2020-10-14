@@ -1,7 +1,9 @@
 <template>
   <main-layout>
     <h1>Dashboard</h1>
-    <simple-map :lat="+events[0].lat" :long="+events[0].long"></simple-map>
+    <div v-for="event in events" :key="event.id">
+      <simple-map :location="event.location"></simple-map>
+    </div>
   </main-layout>
 </template>
 
