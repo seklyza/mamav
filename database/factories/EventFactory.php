@@ -24,7 +24,7 @@ class EventFactory extends Factory
         return [
             'name' => $this->faker->sentence(4),
             'description' => $this->faker->paragraph(2),
-            'datetime' => $this->faker->dateTime,
+            'datetime' => $this->faker->dateTimeThisYear,
             'location' => $this->faker->address
         ];
     }

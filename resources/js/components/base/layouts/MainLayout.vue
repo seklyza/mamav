@@ -1,7 +1,7 @@
 <template>
   <div>
     <the-navbar></the-navbar>
-    <div class="ml-16 mt-12">
+    <div class="mx-6 my-6">
       <slot></slot>
     </div>
   </div>
