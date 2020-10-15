@@ -109,7 +109,7 @@ export default defineComponent({
       const formData = handleSubmit()
       if (!formData) return
 
-      if (!route().current('register')) {
+      if (route().current('register')) {
         Inertia.post(route('register.store'), formData)
       }
     }
