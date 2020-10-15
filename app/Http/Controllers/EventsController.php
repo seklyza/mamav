@@ -8,25 +8,22 @@ class EventsController extends Controller
 {
     public function upcomingEvents()
     {
-        return inertia('EventsList', [
+        return inertia('UpcomingEvents', [
             'events' => Auth::user()->events,
-            'title' => 'Upcoming Events'
         ]);
     }
 
     public function myEvents()
     {
-        return inertia('EventsList', [
+        return inertia('MyEvents', [
             'events' => Auth::user()->ownedEvents,
-            'title' => 'My Events'
         ]);
     }
 
     public function previousEvents()
     {
-        return inertia('EventsList', [
+        return inertia('PreviousEvents', [
             'events' => [],
-            'title' => 'Previous Events'
         ]);
     }
 }
