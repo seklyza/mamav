@@ -12,6 +12,9 @@ module.exports = {
         primary: '#181fae',
       },
     },
+    inset: {
+      '16px': '16px',
+    },
   },
   variants: {},
   plugins: [],

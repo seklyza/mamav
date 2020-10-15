@@ -1,6 +1,7 @@
 <template>
   <main-layout title="Upcoming Events">
     <events-list :events="events"></events-list>
+    <base-fab></base-fab>
   </main-layout>
 </template>
 
