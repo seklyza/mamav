@@ -4,37 +4,21 @@
       <base-form-input
         name="name"
         label="Event Name"
-        v-model.trim="form.name.val"
-        :error="form.name.error"
-        @clear-validity="clearValidity"
+        v-model.trim="name"
       ></base-form-input>
     </form>
   </main-layout>
 </template>
 
 <script>
-import { useForm } from '../hooks/useForm'
 export default {
-  setup() {
-    const { form, clearValidity, handleSubmit } = useForm(
-      ['name', '', val => (val === '' ? 'This field is required' : false)],
-      ['description', ''],
-      ['datetime', Date.now()],
-      [],
-    )
-
-    function onSubmit() {
-      const formData = handleSubmit()
-      if (!formData) return
-
-      console.log(formData)
-    }
-
+  data() {
     return {
-      form,
-      clearValidity,
-      onSubmit,
+      name: '',
     }
+  },
+  methods: {
+    onSubmit() {},
   },
 }
 </script>
