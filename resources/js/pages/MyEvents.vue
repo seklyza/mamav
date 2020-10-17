@@ -9,8 +9,8 @@
   </main-layout>
 </template>
 
-<script setup>
-import EventsList from '../components/events/EventsList'
+<script lang="ts" setup>
+import EventsList from '../components/events/EventsList.vue'
 import { useCreateEvent } from '../hooks/methods/useCreateEvent'
 
 export const { visitCreateEvent } = useCreateEvent()
