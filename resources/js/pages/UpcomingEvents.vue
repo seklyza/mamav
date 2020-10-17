@@ -5,21 +5,16 @@
   </main-layout>
 </template>
 
-<script>
-import EventsList from '../components/events/EventsList'
+<script lang="ts" setup>
+import EventsList from '../components/events/EventsList.vue'
 import { useCreateEvent } from '../hooks/methods/useCreateEvent'
+
+export const { visitCreateEvent } = useCreateEvent()
 
 export default {
   components: {
     EventsList,
   },
   props: ['events'],
-  setup() {
-    const { visitCreateEvent } = useCreateEvent()
-
-    return {
-      visitCreateEvent,
-    }
-  },
 }
 </script>

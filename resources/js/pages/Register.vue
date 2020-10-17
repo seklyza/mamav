@@ -17,33 +17,33 @@
       <base-form-input
         name="name"
         label="Name"
-        v-model.trim="name"
+        v-model.trim="form.name"
       ></base-form-input>
 
       <base-form-input
         name="email"
         label="Email"
-        v-model.trim="email"
+        v-model.trim="form.email"
       ></base-form-input>
 
       <base-form-input
         name="username"
         label="Username"
-        v-model.trim="username"
+        v-model.trim="form.username"
       ></base-form-input>
 
       <base-form-input
         type="password"
         name="password"
         label="Password"
-        v-model.trim="password"
+        v-model.trim="form.password"
       ></base-form-input>
 
       <base-form-input
         type="password"
         name="password_confirmation"
         label="Confirm Password"
-        v-model.trim="confirmPassword"
+        v-model.trim="form.confirmPassword"
       ></base-form-input>
 
       <base-button>Register</base-button>
@@ -59,39 +59,29 @@
   </auth-layout>
 </template>
 
-<script>
+<script lang="ts" setup>
 import { Inertia } from '@inertiajs/inertia'
-import { reactive, toRefs } from 'vue'
+import { reactive } from 'vue'
 
-export default {
-  setup() {
-    const state = reactive({
-      name: '',
-      email: '',
-      username: '',
-      password: '',
-      confirmPassword: '',
-    })
+export const form = reactive({
+  name: '',
+  email: '',
+  username: '',
+  password: '',
+  confirmPassword: '',
+})
 
-    function onSubmit() {
-      if (route().current('register')) {
-        const formData = {
-          name: state.name,
-          email: state.email,
-          username: state.username,
-          password: state.password,
-          password_confirmation: state.confirmPassword,
-        }
-
-        Inertia.post(route('register.store'), formData)
-      }
+export function onSubmit() {
+  if (route().current('register')) {
+    const formData = {
+      name: form.name,
+      email: form.email,
+      username: form.username,
+      password: form.password,
+      password_confirmation: form.confirmPassword,
     }
 
-    return {
-      ...toRefs(state),
-
-      onSubmit,
-    }
-  },
+    Inertia.post(route('register.store'), formData)
+  }
 }
 </script>

@@ -11,14 +11,14 @@
       <base-form-input
         name="username"
         label="Username"
-        v-model.trim="username"
+        v-model.trim="form.username"
       ></base-form-input>
 
       <base-form-input
         type="password"
         name="password"
         label="Password"
-        v-model.trim="password"
+        v-model.trim="form.password"
       ></base-form-input>
 
       <base-button>Log In</base-button>
@@ -34,28 +34,18 @@
   </auth-layout>
 </template>
 
-<script>
-import { reactive, toRefs, watchEffect } from 'vue'
+<script lang="ts" setup>
+import { reactive } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 
-export default {
-  setup() {
-    const state = reactive({
-      username: '',
-      password: '',
-    })
+export const form = reactive({
+  username: '',
+  password: '',
+})
 
-    function onSubmit() {
-      const formData = { ...state }
+export function onSubmit() {
+  const formData = { ...form }
 
-      Inertia.post(route('login.store'), formData)
-    }
-
-    return {
-      ...toRefs(state),
-
-      onSubmit,
-    }
-  },
+  Inertia.post(route('login.store'), formData)
 }
 </script>

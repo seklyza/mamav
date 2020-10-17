@@ -9,21 +9,16 @@
   </main-layout>
 </template>
 
-<script>
+<script setup>
 import EventsList from '../components/events/EventsList'
 import { useCreateEvent } from '../hooks/methods/useCreateEvent'
 
+export const { visitCreateEvent } = useCreateEvent()
+
 export default {
+  props: ['events'],
   components: {
     EventsList,
-  },
-  props: ['events'],
-  setup() {
-    const { visitCreateEvent } = useCreateEvent()
-
-    return {
-      visitCreateEvent,
-    }
   },
 }
 </script>
