@@ -14,47 +14,47 @@
       :message2="$page.success"
     ></base-alert>
     <form class="flex flex-col pt-3 md:pt-8" @submit.prevent="onSubmit">
-      <form-input
+      <base-form-input
         name="name"
         label="Name"
         v-model.trim="form.name.val"
         :error="form.name.error"
         @clear-validity="clearValidity"
-      ></form-input>
+      ></base-form-input>
 
-      <form-input
+      <base-form-input
         name="email"
         label="Email"
         v-model.trim="form.email.val"
         :error="form.email.error"
         @clear-validity="clearValidity"
-      ></form-input>
+      ></base-form-input>
 
-      <form-input
+      <base-form-input
         name="username"
         label="Username"
         v-model.trim="form.username.val"
         :error="form.username.error"
         @clear-validity="clearValidity"
-      ></form-input>
+      ></base-form-input>
 
-      <form-input
+      <base-form-input
         type="password"
         name="password"
         label="Password"
         v-model.trim="form.password.val"
         :error="form.password.error"
         @clear-validity="clearValidity"
-      ></form-input>
+      ></base-form-input>
 
-      <form-input
+      <base-form-input
         type="password"
         name="password_confirmation"
         label="Confirm Password"
         v-model.trim="form.password_confirmation.val"
         :error="form.password_confirmation.error"
         @clear-validity="clearValidity"
-      ></form-input>
+      ></base-form-input>
 
       <base-button>Register</base-button>
     </form>
@@ -74,12 +74,7 @@ import { defineComponent } from '@vue/composition-api'
 import { useForm } from '../hooks/useForm'
 import { Inertia } from '@inertiajs/inertia'
 
-import FormInput from '../components/auth/FormInput.vue'
-
 export default defineComponent({
-  components: {
-    FormInput,
-  },
   setup() {
     const { form, clearValidity, handleSubmit } = useForm(
       ['name', '', val => (val === '' ? 'The name field is required' : false)],

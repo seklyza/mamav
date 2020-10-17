@@ -26,4 +26,9 @@ class EventsController extends Controller
             'events' => [],
         ]);
     }
+
+    public function createEvent()
+    {
+        return inertia('CreateEvent');
+    }
 }

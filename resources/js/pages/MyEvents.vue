@@ -5,17 +5,25 @@
       add one!
     </p>
     <events-list v-else :events="events"></events-list>
-    <base-fab></base-fab>
+    <base-fab @click="visitCreateEvent"></base-fab>
   </main-layout>
 </template>
 
 <script>
 import EventsList from '../components/events/EventsList'
+import { useCreateEvent } from '../hooks/methods/useCreateEvent'
 
 export default {
   components: {
     EventsList,
   },
   props: ['events'],
+  setup() {
+    const { visitCreateEvent } = useCreateEvent()
+
+    return {
+      createEvent,
+    }
+  },
 }
 </script>

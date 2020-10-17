@@ -8,22 +8,22 @@
       :message2="$page.flash.message"
     ></base-alert>
     <form class="flex flex-col pb-3 md:pb-8" @submit.prevent="onSubmit">
-      <form-input
+      <base-form-input
         name="username"
         label="Username"
         v-model.trim="form.username.val"
         :error="form.username.error"
         @clear-validity="clearValidity"
-      ></form-input>
+      ></base-form-input>
 
-      <form-input
+      <base-form-input
         type="password"
         name="password"
         label="Password"
         v-model.trim="form.password.val"
         :error="form.password.error"
         @clear-validity="clearValidity"
-      ></form-input>
+      ></base-form-input>
 
       <base-button>Log In</base-button>
     </form>
@@ -42,13 +42,9 @@
 import { defineComponent, reactive, toRefs } from '@vue/composition-api'
 import { Inertia } from '@inertiajs/inertia'
 
-import FormInput from '../components/auth/FormInput.vue'
 import { useForm } from '../hooks/useForm'
 
 export default defineComponent({
-  components: {
-    FormInput,
-  },
   setup() {
     const { form, clearValidity, handleSubmit } = useForm(
       [

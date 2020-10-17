@@ -18,10 +18,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', fn () => redirect()->route('upcoming-events'))->name('index');
+Route::get('/', fn () => redirect()->route('events'))->name('index');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
-    Route::get('/upcoming-events', [EventsController::class, 'upcomingEvents'])->name('upcoming-events');
+    Route::get('/events', [EventsController::class, 'upcomingEvents'])->name('events');
+    Route::get('/events/create', [EventsController::class, 'createEvent'])->name('events.create');
     Route::get('/my-events', [EventsController::class, 'myEvents'])->name('my-events');
     Route::get('/previous-events', [EventsController::class, 'previousEvents'])->name('previous-events');
     Route::inertia('/settings', 'Settings')->name('settings');

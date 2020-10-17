@@ -22,7 +22,7 @@
       :class="menuExpanded ? 'block' : 'hidden'"
     >
       <div class="text-sm lg:flex-grow">
-        <nav-link to="upcoming-events">
+        <nav-link to="events">
           Upcoming Events
         </nav-link>
         <nav-link to="my-events">
