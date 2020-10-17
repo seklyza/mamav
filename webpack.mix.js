@@ -14,7 +14,7 @@ require('laravel-mix-vue3')
  */
 
 mix
-  .vue3('resources/js/app.js', 'public/js', {
+  .vue3('resources/js/app.ts', 'public/js', {
     typescript: true,
   })
   .postCss('resources/css/app.css', 'public/css', [require('tailwindcss')])
