@@ -2,58 +2,48 @@
   <auth-layout>
     <p class="text-center text-3xl">Register to MaMaV</p>
     <base-alert
-      v-if="$page.flash.message"
+      v-if="$page.props.flash.message"
       color="red"
       message1="Could not login:"
-      :message2="$page.flash.message"
+      :message2="$page.props.flash.message"
     ></base-alert>
     <base-alert
-      v-if="$page.success"
+      v-if="$page.props.success"
       color="green"
       message1="Hooray!"
-      :message2="$page.success"
+      :message2="$page.props.success"
     ></base-alert>
     <form class="flex flex-col pt-3 md:pt-8" @submit.prevent="onSubmit">
       <base-form-input
         name="name"
         label="Name"
-        v-model.trim="form.name.val"
-        :error="form.name.error"
-        @clear-validity="clearValidity"
+        v-model.trim="name"
       ></base-form-input>
 
       <base-form-input
         name="email"
         label="Email"
-        v-model.trim="form.email.val"
-        :error="form.email.error"
-        @clear-validity="clearValidity"
+        v-model.trim="email"
       ></base-form-input>
 
       <base-form-input
         name="username"
         label="Username"
-        v-model.trim="form.username.val"
-        :error="form.username.error"
-        @clear-validity="clearValidity"
+        v-model.trim="username"
       ></base-form-input>
 
       <base-form-input
         type="password"
         name="password"
         label="Password"
-        v-model.trim="form.password.val"
-        :error="form.password.error"
-        @clear-validity="clearValidity"
+        v-model.trim="password"
       ></base-form-input>
 
       <base-form-input
         type="password"
         name="password_confirmation"
         label="Confirm Password"
-        v-model.trim="form.password_confirmation.val"
-        :error="form.password_confirmation.error"
-        @clear-validity="clearValidity"
+        v-model.trim="confirmPassword"
       ></base-form-input>
 
       <base-button>Register</base-button>
@@ -70,51 +60,38 @@
 </template>
 
 <script>
-import { defineComponent } from '@vue/composition-api'
-import { useForm } from '../hooks/useForm'
 import { Inertia } from '@inertiajs/inertia'
+import { reactive, toRefs } from 'vue'
 
-export default defineComponent({
+export default {
   setup() {
-    const { form, clearValidity, handleSubmit } = useForm(
-      ['name', '', val => (val === '' ? 'The name field is required' : false)],
-      [
-        'email',
-        '',
-        val => (val === '' ? 'The e-mail field is required' : false),
-      ],
-      [
-        'username',
-        '',
-        val => (val === '' ? 'The username field is required' : false),
-      ],
-      [
-        'password',
-        '',
-        val => (val === '' ? 'The password field is required' : false),
-      ],
-      [
-        'password_confirmation',
-        '',
-        val => (val === '' ? 'The confirm password field is required' : false),
-      ],
-    )
+    const state = reactive({
+      name: '',
+      email: '',
+      username: '',
+      password: '',
+      confirmPassword: '',
+    })
 
     function onSubmit() {
-      const formData = handleSubmit()
-      if (!formData) return
-
       if (route().current('register')) {
+        const formData = {
+          name: state.name,
+          email: state.email,
+          username: state.username,
+          password: state.password,
+          password_confirmation: state.confirmPassword,
+        }
+
         Inertia.post(route('register.store'), formData)
       }
     }
 
     return {
-      form,
+      ...toRefs(state),
 
-      clearValidity,
       onSubmit,
     }
   },
-})
+}
 </script>

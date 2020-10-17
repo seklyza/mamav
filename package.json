@@ -11,22 +11,24 @@
     "clean": "rimraf public/js public/css public/mix-manifest.json"
   },
   "devDependencies": {
+    "@types/webpack-env": "^1.15.3",
+    "@vue/compiler-sfc": "^3.0.1",
     "axios": "^0.19",
     "cross-env": "^7.0",
     "laravel-mix": "^5.0.1",
+    "laravel-mix-vue3": "^0.7.0",
     "lodash": "^4.17.19",
     "resolve-url-loader": "^3.1.0",
     "rimraf": "^3.0.2",
-    "vue-template-compiler": "^2.6.12"
+    "vue-loader": "^16.0.0-beta.8"
   },
   "dependencies": {
-    "@inertiajs/inertia": "^0.3.6",
-    "@inertiajs/inertia-vue": "^0.2.4",
+    "@inertiajs/inertia": "^0.4.3",
+    "@inertiajs/inertia-vue3": "^0.1.1",
     "@inertiajs/progress": "^0.1.2",
-    "@vue/composition-api": "^1.0.0-beta.15",
     "dayjs": "^1.9.3",
     "tailwindcss": "^1.8.12",
-    "vue": "^2.6.12",
+    "vue": "^3.0.1",
     "ziggy-js": "^0.9.4"
   }
 }

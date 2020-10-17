@@ -2,27 +2,23 @@
   <auth-layout>
     <p class="text-center text-3xl">Login to MaMaV</p>
     <base-alert
-      v-if="$page.flash.message"
+      v-if="$page.props.flash.message"
       color="red"
       message1="Could not login:"
-      :message2="$page.flash.message"
+      :message2="$page.props.flash.message"
     ></base-alert>
     <form class="flex flex-col pb-3 md:pb-8" @submit.prevent="onSubmit">
       <base-form-input
         name="username"
         label="Username"
-        v-model.trim="form.username.val"
-        :error="form.username.error"
-        @clear-validity="clearValidity"
+        v-model.trim="username"
       ></base-form-input>
 
       <base-form-input
         type="password"
         name="password"
         label="Password"
-        v-model.trim="form.password.val"
-        :error="form.password.error"
-        @clear-validity="clearValidity"
+        v-model.trim="password"
       ></base-form-input>
 
       <base-button>Log In</base-button>
@@ -39,39 +35,27 @@
 </template>
 
 <script>
-import { defineComponent, reactive, toRefs } from '@vue/composition-api'
+import { reactive, toRefs, watchEffect } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 
-import { useForm } from '../hooks/useForm'
-
-export default defineComponent({
+export default {
   setup() {
-    const { form, clearValidity, handleSubmit } = useForm(
-      [
-        'username',
-        '',
-        val => (val === '' ? 'The username field is required' : false),
-      ],
-      [
-        'password',
-        '',
-        val => (val === '' ? 'The password field is required' : false),
-      ],
-    )
+    const state = reactive({
+      username: '',
+      password: '',
+    })
 
     function onSubmit() {
-      const formData = handleSubmit()
-      if (!formData) return
+      const formData = { ...state }
 
       Inertia.post(route('login.store'), formData)
     }
 
     return {
-      form,
+      ...toRefs(state),
 
-      clearValidity,
       onSubmit,
     }
   },
-})
+}
 </script>

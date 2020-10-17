@@ -22,7 +22,7 @@ export default {
     const { visitCreateEvent } = useCreateEvent()
 
     return {
-      createEvent,
+      visitCreateEvent,
     }
   },
 }

@@ -36,7 +36,9 @@
         </nav-link>
       </div>
       <div>
-        <span class="text-white mr-2">Hello, {{ $page.auth.user.name }}</span>
+        <span class="text-white mr-2"
+          >Hello, {{ $page.props.auth.user.name }}</span
+        >
         <button
           @click="logout"
           class="inline-block text-sm px-4 py-2 leading-none border rounded text-gray-300 border-white hover:border-transparent hover:text-primary hover:bg-white mt-4 lg:mt-0"
