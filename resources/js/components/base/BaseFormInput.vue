@@ -7,13 +7,13 @@
       :placeholder="label"
       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
       :class="{
-        'border-red-500': $page.props.errors[name],
+        'border-red-500': $page.props.errors[name] && showErrors,
       }"
       autocomplete="off"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
     />
-    <p class="text-red-500">{{ $page.props.errors[name] }}</p>
+    <p v-if="showErrors" class="text-red-500">{{ $page.props.errors[name] }}</p>
   </div>
 </template>
 
@@ -28,6 +28,10 @@ export default {
     },
     label: String,
     modelValue: String,
+    showErrors: {
+      type: Boolean,
+      default: true,
+    },
   },
   emits: ['update:modelValue'],
 }

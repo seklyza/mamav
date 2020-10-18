@@ -13,6 +13,7 @@ class Event extends Model
         'name',
         'description',
         'location',
+        'datetime'
     ];
 
     public function organizer()
