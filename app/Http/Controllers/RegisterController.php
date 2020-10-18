@@ -18,11 +18,11 @@ class RegisterController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'string|required|min:3',
-            'email' => 'string|required|email|min:6',
-            'username' => 'string|required|min:6',
-            'password' => 'string|required|confirmed|min:6',
-            'password_confirmation' => 'string|required',
+            'name' => 'required|string|min:3',
+            'email' => 'required|string|email|min:6',
+            'username' => 'required|string|min:6',
+            'password' => 'required|string|confirmed|min:6',
+            'password_confirmation' => 'required|string',
         ]);
 
         try {
@@ -33,7 +33,7 @@ class RegisterController extends Controller
                 'password' => bcrypt($data['password']),
             ]);
         } catch (QueryException $ex) {
-            if ($ex->errorInfo[0] === "23000") {
+            if ($ex->errorInfo[0] === '23000') {
                 return back()->with(['message' => 'Username/email is already taken.']);
             }
         }
