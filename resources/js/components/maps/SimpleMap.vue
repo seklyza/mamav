@@ -10,29 +10,37 @@ export default {
       showMap: false,
     }
   },
-  async mounted() {
-    const geocoder = new google.maps.Geocoder()
-    geocoder.geocode({ address: this.location }, results => {
-      if (!results.length) return
+  methods: {
+    async updateMap() {
+      const geocoder = new google.maps.Geocoder()
+      geocoder.geocode({ address: this.location }, results => {
+        if (!results || !results.length) return
 
-      const loc = {
-        lat: results[0].geometry.location.lat(),
-        lng: results[0].geometry.location.lng(),
-      }
-      const map = new google.maps.Map(this.$refs.map, {
-        center: loc,
-        zoom: 16,
-        disableDefaultUI: true,
-        clickableIcons: false,
+        const loc = {
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng(),
+        }
+        const map = new google.maps.Map(this.$refs.map, {
+          center: loc,
+          zoom: 16,
+          disableDefaultUI: true,
+          clickableIcons: false,
+        })
+
+        new google.maps.Marker({
+          position: loc,
+          map,
+        })
+
+        this.showMap = true
       })
-
-      new google.maps.Marker({
-        position: loc,
-        map,
-      })
-
-      this.showMap = true
-    })
+    },
+  },
+  updated() {
+    this.updateMap()
+  },
+  mounted() {
+    this.updateMap()
   },
 }
 </script>
