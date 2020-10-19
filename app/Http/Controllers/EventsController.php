@@ -51,5 +51,7 @@ class EventsController extends Controller
         $event->organizer_id = $user->id;
         $event->save();
         $event->participants()->attach($user);
+
+        return redirect()->route('events');
     }
 }
