@@ -23,7 +23,7 @@ class EventsControllerTest extends TestCase
         /** @var Event */ $event = Event::factory()->make();
         $event->datetime = Carbon::instance($event->datetime);
         $response = $this->actingAs($user)->post(route('events.store'), $event->toArray());
-        $response->assertRedirect(route('events'));
+        $response->assertRedirect(route('events.show', 1));
 
         /** @var Event */ $saved_event = Event::find(1)->first();
         $this->assertNotNull($saved_event);

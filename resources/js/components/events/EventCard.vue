@@ -1,5 +1,5 @@
 <template>
-  <li class="mb-6 w-full">
+  <component :is="rootEl" class="mb-6 w-full">
     <div class="max-w-6xl rounded overflow-hidden shadow-lg w-full">
       <!-- <img class="w-full" :src="image_url" alt="Sunset in the mountains" /> -->
       <simple-map :location="location" class="w-full"></simple-map>
@@ -7,6 +7,13 @@
         <div class="font-bold text-xl mb-2">{{ name }}</div>
         <p class="text-gray-700 text-base">
           {{ description }}
+        </p>
+        <p class="mt-4" v-if="rootEl === 'li'">
+          <inertia-link
+            :href="route('events.show', id)"
+            class="text-blue-600 underline cursor-pointer"
+            >More details...</inertia-link
+          >
         </p>
       </div>
       <div class="px-6 pt-4 pb-2">
@@ -20,7 +27,7 @@
         >
       </div>
     </div>
-  </li>
+  </component>
 </template>
 
 <script>
@@ -43,6 +50,10 @@ export default {
     created_at: String,
     updated_at: String,
     pivot: Object,
+    rootEl: {
+      type: String,
+      default: 'li',
+    },
   },
   computed: {
     formattedDateTime() {

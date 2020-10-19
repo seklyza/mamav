@@ -16,6 +16,13 @@ class EventsController extends Controller
         ]);
     }
 
+    public function show(int $id)
+    {
+        $event = Event::findOrFail($id);
+
+        return inertia('Events/EventDetail', ['event' => $event]);
+    }
+
     public function myEvents()
     {
         return inertia('Events/MyEvents', [
@@ -52,6 +59,6 @@ class EventsController extends Controller
         $event->save();
         $event->participants()->attach($user);
 
-        return redirect()->route('events');
+        return redirect()->route('events.show', $event->id);
     }
 }
