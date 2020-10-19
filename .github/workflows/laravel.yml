@@ -30,3 +30,9 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
+    - name: Build and test frontend
+      run: |
+        php artisan ziggy:generate
+        npm ci
+        npm run prod
+        npm test
