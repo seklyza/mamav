@@ -47,7 +47,7 @@
 <script>
 import _debounce from 'lodash/debounce'
 
-import SimpleMap from '../components/maps/SimpleMap.vue'
+import SimpleMap from '../../components/maps/SimpleMap.vue'
 import { Inertia } from '@inertiajs/inertia'
 
 export default {

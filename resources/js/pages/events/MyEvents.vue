@@ -10,8 +10,8 @@
 </template>
 
 <script lang="ts" setup>
-import EventsList from '../components/events/EventsList.vue'
-import { useCreateEvent } from '../hooks/methods/useCreateEvent'
+import EventsList from '../../components/events/EventsList.vue'
+import { useCreateEvent } from '../../hooks/methods/useCreateEvent'
 
 export const { visitCreateEvent } = useCreateEvent()
 

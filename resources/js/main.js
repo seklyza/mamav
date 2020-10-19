@@ -11,7 +11,13 @@ const app = createApp({
   render: () =>
     h(App, {
       initialPage: JSON.parse(el.dataset.page),
-      resolveComponent: name => require(`./pages/${name}`).default,
+      resolveComponent: name => {
+        let path = name.split('/')
+        path = path
+          .map((file, i) => (i === path.length - 1 ? file : file.toLowerCase()))
+          .join('/')
+        return require(`./pages/${path}`).default
+      },
     }),
 }).use(interiaPlugin)
 

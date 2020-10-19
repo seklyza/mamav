@@ -11,28 +11,28 @@ class EventsController extends Controller
 {
     public function upcomingEvents()
     {
-        return inertia('UpcomingEvents', [
+        return inertia('Events/UpcomingEvents', [
             'events' => Auth::user()->events,
         ]);
     }
 
     public function myEvents()
     {
-        return inertia('MyEvents', [
+        return inertia('Events/MyEvents', [
             'events' => Auth::user()->ownedEvents,
         ]);
     }
 
     public function previousEvents()
     {
-        return inertia('PreviousEvents', [
+        return inertia('Events/PreviousEvents', [
             'events' => [],
         ]);
     }
 
     public function create()
     {
-        return inertia('CreateEvent');
+        return inertia('Events/CreateEvent');
     }
 
     public function store(Request $request)
