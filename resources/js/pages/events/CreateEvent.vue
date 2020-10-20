@@ -18,6 +18,7 @@
           name="datetime"
           label="Event Date"
           v-model.trim="date"
+          max="2028-12-31"
         ></base-form-input>
         <base-form-input
           type="time"
@@ -71,7 +72,7 @@ export default {
           const [hours, minutes] = this.time.split(':')
           datetime.setHours(hours)
           datetime.setMinutes(minutes)
-          return datetime.toISOString()
+          return datetime
         } catch (e) {
           return ''
         }
@@ -83,7 +84,6 @@ export default {
         datetime,
         location: this.location,
       }
-      console.log(formData)
 
       Inertia.post(route('events.store'), formData)
     },

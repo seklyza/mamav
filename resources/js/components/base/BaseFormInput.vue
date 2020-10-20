@@ -12,6 +12,7 @@
       autocomplete="off"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
+      :max="max"
     />
     <p v-if="showErrors" class="text-red-500">{{ $page.props.errors[name] }}</p>
   </div>
@@ -32,6 +33,7 @@ export default {
       type: Boolean,
       default: true,
     },
+    max: String,
   },
   emits: ['update:modelValue'],
 }
