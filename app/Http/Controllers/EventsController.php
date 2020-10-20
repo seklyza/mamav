@@ -20,8 +20,30 @@ class EventsController extends Controller
     {
         $user = Auth::user();
         $event = Event::findOrFail($id);
-        if ($event->participants()->find($user->id)) {
-            return inertia('Events/EventDetail', ['event' => $event]);
+
+        $user_is_one_of_participants = $event->participants()->find($user->id);
+        $join_secret = request('link');
+
+        if ($user_is_one_of_participants) {
+            if ($join_secret) {
+                abort(404);
+                return;
+            }
+
+            $data = ['event' => $event];
+            if ($event->organizer_id === $user->id) {
+                $data['join_secret'] = $event->join_secret;
+            }
+
+            return inertia('Events/EventDetail', $data);
+        } elseif ($join_secret) {
+            if ($event->join_secret !== request('link')) {
+                abort(404);
+                return;
+            }
+            $event->participants()->attach($user);
+
+            return redirect()->route('events.show', $id);
         } else {
             return redirect()->route('index');
         }

@@ -16,6 +16,10 @@ class Event extends Model
         'datetime'
     ];
 
+    protected $hidden = [
+        'join_secret'
+    ];
+
     public function organizer()
     {
         return $this->belongsTo(User::class, 'organizer_id', 'id');

@@ -33,6 +33,7 @@
 <script>
 import dayjs from 'dayjs'
 
+import { formatDateTime } from '../../utils/date'
 import SimpleMap from '../maps/SimpleMap'
 
 export default {
@@ -57,7 +58,7 @@ export default {
   },
   computed: {
     formattedDateTime() {
-      return dayjs(this.datetime).format('dddd, MMMM D, YYYY, hh:mm A')
+      return formatDateTime(this.datetime)
     },
   },
 }
