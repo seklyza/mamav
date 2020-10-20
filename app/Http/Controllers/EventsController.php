@@ -18,9 +18,13 @@ class EventsController extends Controller
 
     public function show(int $id)
     {
+        $user = Auth::user();
         $event = Event::findOrFail($id);
-
-        return inertia('Events/EventDetail', ['event' => $event]);
+        if ($event->participants()->find($user->id)) {
+            return inertia('Events/EventDetail', ['event' => $event]);
+        } else {
+            return redirect()->route('index');
+        }
     }
 
     public function myEvents()
