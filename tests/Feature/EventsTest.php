@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class EventsControllerTest extends TestCase
+class EventsTest extends TestCase
 {
     use RefreshDatabase;
 
