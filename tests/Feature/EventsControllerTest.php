@@ -31,4 +31,16 @@ class EventsControllerTest extends TestCase
         $this->assertEquals($saved_event->organizer->id, $user->id);
         $this->assertEquals($saved_event->participants()->first()->id, $user->id);
     }
+
+    public function testJoinEvent()
+    {
+        /** @var Event */ $event = Event::factory()->for(User::factory(), 'organizer')->create()->first();
+        /** @var User */ $participant_to_join = User::factory()->create();
+
+        $response = $this->actingAs($participant_to_join)->get(route('events.show', ['id' => $event->id, 'link' => $event->join_secret]));
+
+        $response->assertRedirect(route('events.show', $event->id));
+        $this->assertDatabaseCount('event_participant', 1);
+        $this->assertEquals($participant_to_join->id, $event->participants()->first()->id);
+    }
 }
