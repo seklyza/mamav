@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
 
-export function formatDateTime(datetime: Parameters<typeof dayjs>[0]) {
-  return dayjs(datetime).format('dddd, MMMM D, YYYY, hh:mm A')
+export function formatDateTime(datetime: string) {
+  return dayjs(`${datetime} UTC`).format('dddd, MMMM D, YYYY, hh:mm A') // all dates are UTC
 }

@@ -1,35 +1,33 @@
 <template>
   <main-layout>
-    <div class="mb-6 w-full">
-      <div class="max-w-6xl rounded overflow-hidden shadow-lg w-full">
-        <simple-map :location="event.location" class="w-full"></simple-map>
-        <div class="px-6 py-4">
-          <div class="font-bold text-xl mb-2">{{ event.name }}</div>
-          <p class="text-gray-700 text-base">
-            {{ event.description }}
-          </p>
-        </div>
-        <a
-          href="javascript:void(0)"
-          class="mx-6 text-blue-500 cursor-pointer"
-          v-if="join_secret"
-          @click="copyLinkToClipboard"
+    <div class="w-full">
+      <simple-map :location="event.location" class="w-full"></simple-map>
+      <h1 class="font-bold text-xl mb-2">{{ event.name }}</h1>
+      <div>
+        <span
+          class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
         >
-          Copy Invite Link to Clipboard
-        </a>
-        <div class="px-6 pt-4 pb-2">
-          <span
-            class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-          >
-            {{ formattedDateTime }}
-          </span>
-          <span
-            class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-          >
-            {{ event.location }}
-          </span>
-        </div>
+          {{ formattedDateTime }}
+        </span>
+        <span
+          class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+        >
+          {{ event.location }}
+        </span>
       </div>
+      <div class="my-4">
+        <p class="text-gray-700 text-base">
+          {{ event.description }}
+        </p>
+      </div>
+      <a
+        href="javascript:void(0)"
+        class="text-blue-500 cursor-pointer"
+        v-if="join_secret"
+        @click="copyLinkToClipboard"
+      >
+        Copy Invite Link to Clipboard
+      </a>
     </div>
   </main-layout>
 </template>
