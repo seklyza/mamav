@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\EmailVerificationController;
-use App\Http\Controllers\EventsController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegisterController;
@@ -21,12 +21,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn () => redirect()->route('events'))->name('index');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
-    Route::get('/events', [EventsController::class, 'upcomingEvents'])->name('events');
-    Route::get('/events/create', [EventsController::class, 'create'])->name('events.create');
-    Route::post('/events/create', [EventsController::class, 'store'])->name('events.store');
-    Route::get('/events/{id}', [EventsController::class, 'show'])->name('events.show');
-    Route::get('/my-events', [EventsController::class, 'myEvents'])->name('my-events');
-    Route::get('/previous-events', [EventsController::class, 'previousEvents'])->name('previous-events');
+    Route::get('/events', [EventController::class, 'upcomingEvents'])->name('events');
+    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+    Route::post('/events/create', [EventController::class, 'store'])->name('events.store');
+    Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
+    Route::get('/my-events', [EventController::class, 'myEvents'])->name('my-events');
+    Route::get('/previous-events', [EventController::class, 'previousEvents'])->name('previous-events');
     Route::inertia('/settings', 'Settings')->name('settings');
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 });

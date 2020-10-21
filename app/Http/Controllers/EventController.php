@@ -7,7 +7,7 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class EventsController extends Controller
+class EventController extends Controller
 {
     public function upcomingEvents()
     {
