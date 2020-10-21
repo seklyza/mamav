@@ -16,10 +16,10 @@ class EventController extends Controller
         ]);
     }
 
-    public function show(int $id)
+    public function show(Event $event)
     {
         $user = Auth::user();
-        $event = Event::findOrFail($id)->load('participants');
+        $event = $event->load('participants');
 
         $user_is_one_of_participants = $event->participants()->find($user->id);
         $join_secret = request('link');
@@ -43,7 +43,7 @@ class EventController extends Controller
             }
             $event->participants()->attach($user);
 
-            return redirect()->route('events.show', $id);
+            return redirect()->route('events.show', $event->id);
         } else {
             return redirect()->route('index');
         }
@@ -86,5 +86,18 @@ class EventController extends Controller
         $event->participants()->attach($user);
 
         return redirect()->route('events.show', $event->id);
+    }
+
+    public function delete(Event $event)
+    {
+        $user = Auth::user();
+
+        if ($event->organizer_id === $user->id) {
+            $event->delete();
+        } else {
+            $event->participants()->detach($user);
+        }
+
+        return redirect()->route('events');
     }
 }

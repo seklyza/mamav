@@ -24,7 +24,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/events', [EventController::class, 'upcomingEvents'])->name('events');
     Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
     Route::post('/events/create', [EventController::class, 'store'])->name('events.store');
-    Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
+    Route::delete('/events/{event}', [EventController::class, 'delete'])->name('events.delete');
+    Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
     Route::get('/my-events', [EventController::class, 'myEvents'])->name('my-events');
     Route::get('/previous-events', [EventController::class, 'previousEvents'])->name('previous-events');
     Route::inertia('/settings', 'Settings')->name('settings');

@@ -38,6 +38,12 @@
           class="shadow-md mb-4 p-4"
         >
           {{ participant.name }} (@{{ participant.username }})
+          <span
+            v-if="auth.user.id === participant.id"
+            class="text-primary italic font-bold"
+          >
+            you
+          </span>
         </li>
       </ul>
     </div>
@@ -46,7 +52,8 @@
         class="bg-red-600 rounded text-white font-bold text-lg hover:bg-red-800 p-3 mt-6"
         @click="leaveEvent"
       >
-        Leave Event
+        {{ auth.user.id === event.organizer_id ? 'Leave and Delete' : 'Leave' }}
+        Event
       </button>
     </div>
   </main-layout>
@@ -59,10 +66,16 @@ import SimpleMap from '../../components/maps/SimpleMap.vue'
 import { Event } from '../../types'
 import { formatDateTime } from '../../utils/date'
 import { copyToClipboard } from '../../utils/clipboard'
+import { Inertia } from '@inertiajs/inertia'
 
 declare const props: {
   event: Event
   join_secret?: string
+  auth: {
+    user: {
+      id: string
+    }
+  }
 }
 
 export const formattedDateTime = computed(() =>
@@ -79,12 +92,8 @@ export function copyLinkToClipboard() {
 }
 
 export function leaveEvent() {
-  if (
-    confirm(
-      "Are you sure you want to leave this event?\nYou'll only be able to re-join with a link.",
-    )
-  ) {
-    // TODO #5 leave
+  if (confirm('Are you sure you want to leave this event?')) {
+    Inertia.delete(route('events.delete', props.event.id))
   }
 }
 

@@ -1,3 +1,6 @@
+require('core-js/stable')
+require('regenerator-runtime/runtime')
+
 window._ = require('lodash')
 
 window.Ziggy = require('../assets/js/ziggy').Ziggy
