@@ -1,8 +1,7 @@
 <template>
   <main-layout>
     <div class="w-full">
-      <simple-map :location="event.location" class="w-full"></simple-map>
-      <h1 class="font-bold text-xl mb-2">{{ event.name }}</h1>
+      <h1 class="font-bold text-3xl mb-2">{{ event.name }}</h1>
       <div>
         <span
           class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
@@ -28,6 +27,27 @@
       >
         Copy Invite Link to Clipboard
       </a>
+    </div>
+    <simple-map :location="event.location" class="w-1/3"></simple-map>
+    <div class="my-6 w-1/4">
+      <h2 class="text-2xl font-bold mb-4">Event Participants:</h2>
+      <ul>
+        <li
+          v-for="participant in event.participants"
+          :key="participant.id"
+          class="shadow-md mb-4 p-4"
+        >
+          {{ participant.name }} (@{{ participant.username }})
+        </li>
+      </ul>
+    </div>
+    <div class="mb-64">
+      <button
+        class="bg-red-600 rounded text-white font-bold text-lg hover:bg-red-800 p-3 mt-6"
+        @click="leaveEvent"
+      >
+        Leave Event
+      </button>
     </div>
   </main-layout>
 </template>
@@ -56,6 +76,16 @@ export function copyLinkToClipboard() {
   }).toString()
 
   copyToClipboard(inviteLink)
+}
+
+export function leaveEvent() {
+  if (
+    confirm(
+      "Are you sure you want to leave this event?\nYou'll only be able to re-join with a link.",
+    )
+  ) {
+    // TODO #5 leave
+  }
 }
 
 export default {

@@ -19,7 +19,7 @@ class EventController extends Controller
     public function show(int $id)
     {
         $user = Auth::user();
-        $event = Event::findOrFail($id);
+        $event = Event::findOrFail($id)->load('participants');
 
         $user_is_one_of_participants = $event->participants()->find($user->id);
         $join_secret = request('link');
