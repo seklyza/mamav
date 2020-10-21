@@ -10,10 +10,12 @@
 </template>
 
 <script lang="ts" setup>
+import { Inertia } from '@inertiajs/inertia'
 import EventsList from '../../components/events/EventsList.vue'
-import { useCreateEvent } from '../../hooks/methods/useCreateEvent'
 
-export const { visitCreateEvent } = useCreateEvent()
+export function visitCreateEvent() {
+  Inertia.visit(route('events.create'))
+}
 
 export default {
   props: ['events'],
