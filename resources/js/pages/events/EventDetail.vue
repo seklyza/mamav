@@ -35,11 +35,12 @@
 </template>
 
 <script lang="ts" setup="props">
-import { computed, PropType } from 'vue'
+import { computed } from 'vue'
 
 import SimpleMap from '../../components/maps/SimpleMap.vue'
 import { Event } from '../../types'
 import { formatDateTime } from '../../utils/date'
+import { copyToClipboard } from '../../utils/clipboard'
 
 declare const props: {
   event: Event
@@ -56,14 +57,7 @@ export function copyLinkToClipboard() {
     link: props.join_secret,
   }).toString()
 
-  const input = document.createElement('input')
-  input.style.position = 'absolute'
-  input.style.left = '-9999px'
-  document.body.appendChild(input)
-  input.value = inviteLink
-  input.select()
-  document.execCommand('copy')
-  document.body.removeChild(input)
+  copyToClipboard(inviteLink)
 }
 
 export default {

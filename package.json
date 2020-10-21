@@ -9,7 +9,7 @@
     "prod": "npm run production",
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "clean": "rimraf public/js public/css public/mix-manifest.json",
-	"test": ""
+    "test": ""
   },
   "devDependencies": {
     "@types/lodash": "^4.14.162",
