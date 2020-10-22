@@ -7,7 +7,7 @@
     }"
     role="alert"
   >
-    <strong class="font-bold">{{ message1 }}</strong>
+    <strong class="font-bold">{{ message1 }}&nbsp;</strong>
     <span class="block sm:inline">{{ message2 }}</span>
   </div>
 </template>
