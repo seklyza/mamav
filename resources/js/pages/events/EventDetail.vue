@@ -42,7 +42,13 @@
             v-if="auth.user.id === participant.id"
             class="text-primary italic font-bold"
           >
-            you
+            (you)
+          </span>
+          <span
+            v-if="event.organizer_id === participant.id"
+            class="text-red-500 italic font-bold"
+          >
+            (organizer)
           </span>
           <x-icon
             v-if="isOwnerOfEvent && auth.user.id !== participant.id"
@@ -91,7 +97,7 @@ export const isOwnerOfEvent = computed(
 
 export function copyLinkToClipboard() {
   const inviteLink = route('events.show', {
-    id: props.event.id,
+    event: props.event.id,
     link: props.join_secret,
   }).toString()
 

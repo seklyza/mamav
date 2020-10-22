@@ -16,10 +16,10 @@ class EventSeeder extends Seeder
     public function run()
     {
         Event::factory(20)->make()->each(function (Event $event) {
-            $paticipants = User::all()->random(8)->pluck('id');
-            $event->organizer_id = $paticipants->first();
+            $participants = User::all()->random(8)->pluck('id');
+            $event->organizer_id = $participants->first();
             $event->save();
-            $event->participants()->attach($paticipants);
+            $event->participants()->attach($participants);
         });
     }
 }
