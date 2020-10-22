@@ -37,7 +37,7 @@
           :key="participant.id"
           class="shadow-md mb-4 p-4"
         >
-          {{ participant.name }} (@{{ participant.username }})
+          {{ participant.name }} ({{ participant.username }})
           <span
             v-if="auth.user.id === participant.id"
             class="text-primary italic font-bold"
@@ -50,11 +50,19 @@
           >
             (organizer)
           </span>
-          <x-icon
+          <div
             v-if="isOwnerOfEvent && auth.user.id !== participant.id"
-            class="w-4 inline float-right text-red-500 cursor-pointer"
-            @click="removeParticipant(participant)"
-          ></x-icon>
+            class="float-right"
+          >
+            <chevron-double-up-icon
+              class="w-4 inline cursor-pointer mr-1 text-green-700"
+              @click="makeEventOrganizer(participant)"
+            ></chevron-double-up-icon>
+            <x-icon
+              class="w-4 inline cursor-pointer text-red-500"
+              @click="removeParticipant(participant)"
+            ></x-icon>
+          </div>
         </li>
       </ul>
     </div>
@@ -107,6 +115,17 @@ export function copyLinkToClipboard() {
 export function leaveEvent() {
   if (confirm('Are you sure you want to leave this event?')) {
     Inertia.delete(route('events.delete', props.event.id))
+  }
+}
+
+export function makeEventOrganizer(
+  participant: NonNullable<typeof props['event']['participants']>[number],
+) {
+  if (
+    confirm(
+      `Are you sure you want to make ${participant.name} the organizer of this event?`,
+    )
+  ) {
   }
 }
 
