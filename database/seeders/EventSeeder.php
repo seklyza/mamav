@@ -17,7 +17,7 @@ class EventSeeder extends Seeder
     {
         Event::factory(20)->make()->each(function (Event $event) {
             $paticipants = User::all()->random(8)->pluck('id');
-            $event->organizer_id = $paticipants->random();
+            $event->organizer_id = $paticipants->first();
             $event->save();
             $event->participants()->attach($paticipants);
         });

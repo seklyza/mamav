@@ -1,5 +1,5 @@
 export interface User {
-  id: string;
+  id: number;
   name: string;
   username: string;
   email: string;
@@ -8,11 +8,12 @@ export interface User {
 }
 
 export interface Event {
-  id: string;
+  id: number;
   name: string;
   description: string;
   datetime: string;
   location: string;
+  organizer_id: number;
   organizer?: User
   participants?: User[]
 }

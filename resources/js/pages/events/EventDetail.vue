@@ -44,6 +44,11 @@
           >
             you
           </span>
+          <x-icon
+            v-if="isOwnerOfEvent && auth.user.id !== participant.id"
+            class="w-4 inline float-right text-red-500 cursor-pointer"
+            @click="removeParticipant(participant)"
+          ></x-icon>
         </li>
       </ul>
     </div>
@@ -52,7 +57,7 @@
         class="bg-red-600 rounded text-white font-bold text-lg hover:bg-red-800 p-3 mt-6"
         @click="leaveEvent"
       >
-        {{ auth.user.id === event.organizer_id ? 'Leave and Delete' : 'Leave' }}
+        {{ isOwnerOfEvent ? 'Leave and Delete' : 'Leave' }}
         Event
       </button>
     </div>
@@ -63,7 +68,7 @@
 import { computed } from 'vue'
 
 import SimpleMap from '../../components/maps/SimpleMap.vue'
-import { Event } from '../../types'
+import { Event, User } from '../../types'
 import { formatDateTime } from '../../utils/date'
 import { copyToClipboard } from '../../utils/clipboard'
 import { Inertia } from '@inertiajs/inertia'
@@ -72,14 +77,16 @@ declare const props: {
   event: Event
   join_secret?: string
   auth: {
-    user: {
-      id: string
-    }
+    user: User
   }
 }
 
 export const formattedDateTime = computed(() =>
   formatDateTime(props.event.datetime),
+)
+
+export const isOwnerOfEvent = computed(
+  () => props.auth.user.id === props.event.organizer_id,
 )
 
 export function copyLinkToClipboard() {
@@ -94,6 +101,20 @@ export function copyLinkToClipboard() {
 export function leaveEvent() {
   if (confirm('Are you sure you want to leave this event?')) {
     Inertia.delete(route('events.delete', props.event.id))
+  }
+}
+
+export function removeParticipant(
+  participant: NonNullable<typeof props['event']['participants']>[number],
+) {
+  if (
+    confirm(
+      `Are you sure you want to remove ${participant.name} from the event?`,
+    )
+  ) {
+    Inertia.delete(
+      route('events.participants.delete', [props.event.id, participant.id]),
+    )
   }
 }
 
