@@ -28,6 +28,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::delete('/events/{event}', [EventController::class, 'delete'])->name('events.delete');
     Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
     Route::delete('/events/{event}/participants/{participant}', [ParticipantController::class, 'delete'])->name('events.participants.delete');
+    Route::post('/events/{event}/participants/{participant}/make-organizer', [ParticipantController::class, 'makeOrganizer'])->name('events.participants.make-organizer');
     Route::get('/my-events', [EventController::class, 'myEvents'])->name('my-events');
     Route::get('/previous-events', [EventController::class, 'previousEvents'])->name('previous-events');
     Route::inertia('/settings', 'Settings')->name('settings');
