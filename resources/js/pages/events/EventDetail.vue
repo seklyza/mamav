@@ -114,6 +114,7 @@ export function removeParticipant(
   ) {
     Inertia.delete(
       route('events.participants.delete', [props.event.id, participant.id]),
+      { preserveScroll: true },
     )
   }
 }
