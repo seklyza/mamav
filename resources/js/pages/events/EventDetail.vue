@@ -126,6 +126,14 @@ export function makeEventOrganizer(
       `Are you sure you want to make ${participant.name} the organizer of this event?`,
     )
   ) {
+    Inertia.post(
+      route('events.participants.make-organizer', [
+        props.event.id,
+        participant.id,
+      ]),
+      {},
+      { preserveScroll: true },
+    )
   }
 }
 
