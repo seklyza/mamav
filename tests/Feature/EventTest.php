@@ -48,21 +48,10 @@ class EventTest extends TestCase
 
     public function testLeaveEvent()
     {
-        function getRandomParticipant(Event $event): User
-        {
-            /** @var User */ $participant = $event->participants()->get()->random();
-
-            if ($participant->id === $event->organizer_id) {
-                return getRandomParticipant($event);
-            }
-
-            return $participant;
-        }
-
         $this->seed(DatabaseSeeder::class);
 
         /** @var Event */ $event = Event::first();
-        $participant = getRandomParticipant($event);
+        /** @var User */ $participant = $event->participants()->get()->where('id', '!=', $event->organizer_id)->first();
 
         $response = $this->actingAs($participant)->delete(route('events.delete', $event->id));
         $response->assertRedirect(route('events'));
