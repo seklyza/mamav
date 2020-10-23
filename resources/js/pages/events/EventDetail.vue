@@ -21,11 +21,18 @@
       </div>
       <a
         href="javascript:void(0)"
-        class="text-blue-500 cursor-pointer"
+        class="text-blue-500 cursor-pointer font-bold"
         v-if="join_secret"
         @click="copyLinkToClipboard"
       >
         Copy Invite Link to Clipboard
+      </a>
+      <a
+        href="javascript:void(0)"
+        class="ml-3 w-4 inline cursor-pointer text-red-500 font-bold"
+        @click="generateANewLink"
+      >
+        Generate a New Link and Copy to Clipboard
       </a>
     </div>
     <simple-map :location="event.location" class="w-1/3"></simple-map>
@@ -148,6 +155,24 @@ export function removeParticipant(
     Inertia.delete(
       route('events.participants.delete', [props.event.id, participant.id]),
       { preserveScroll: true },
+    )
+  }
+}
+
+export async function generateANewLink() {
+  if (
+    confirm(
+      `Are you sure you want to revoke the current link and generate a new one?
+The new link will be copied to your clipboard.`,
+    )
+  ) {
+    await Inertia.post(
+      route('events.generate-link', props.event.id),
+      {},
+      {
+        preserveScroll: true,
+        onSuccess: copyLinkToClipboard,
+      },
     )
   }
 }

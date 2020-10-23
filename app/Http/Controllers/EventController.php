@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -99,5 +100,17 @@ class EventController extends Controller
         }
 
         return redirect()->route('events');
+    }
+
+    public function generateLink(Event $event)
+    {
+        $user = Auth::user();
+
+        if ($event->organizer_id === $user->id) {
+            $event->join_secret = new Expression('LEFT(MD5(RAND()), 30)');
+            $event->save();
+        }
+
+        return redirect()->route('events.show', $event->id);
     }
 }

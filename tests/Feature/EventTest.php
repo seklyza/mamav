@@ -75,4 +75,20 @@ class EventTest extends TestCase
         $this->expectException(ModelNotFoundException::class);
         $event->refresh();
     }
+
+    public function testGenerateANewLink()
+    {
+        $this->seed(DatabaseSeeder::class);
+        /** @var Event */ $event = Event::first();
+        $old_secret = $event->join_secret;
+        $user = $event->organizer;
+
+        $response = $this->actingAs($user)->post(route('events.generate-link', $event->id));
+
+        $response->assertRedirect(route('events.show', $event->id));
+
+        $new_secret = $event->refresh()->join_secret;
+
+        $this->assertNotEquals($old_secret, $new_secret);
+    }
 }
