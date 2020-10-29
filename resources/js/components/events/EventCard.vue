@@ -28,8 +28,6 @@
 </template>
 
 <script lang="ts" setup="props">
-import dayjs from 'dayjs'
-
 import { formatDateTime } from '../../utils/date'
 import SimpleMap from '../maps/SimpleMap.vue'
 import { computed } from 'vue'

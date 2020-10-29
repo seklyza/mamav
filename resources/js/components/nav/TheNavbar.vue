@@ -22,18 +22,10 @@
       :class="menuExpanded ? 'block' : 'hidden'"
     >
       <div class="text-sm lg:flex-grow">
-        <nav-link to="events">
-          Upcoming Events
-        </nav-link>
-        <nav-link to="my-events">
-          My Events
-        </nav-link>
-        <nav-link to="previous-events">
-          Previous Events
-        </nav-link>
-        <nav-link to="settings">
-          Settings
-        </nav-link>
+        <nav-link to="events">Upcoming Events</nav-link>
+        <nav-link to="my-events">My Events</nav-link>
+        <nav-link to="previous-events">Previous Events</nav-link>
+        <nav-link to="settings">Settings</nav-link>
       </div>
       <div>
         <span class="text-white mr-2"

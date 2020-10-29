@@ -1,7 +1,5 @@
 const mix = require('laravel-mix')
 
-require('laravel-mix-vue3')
-
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -13,10 +11,21 @@ require('laravel-mix-vue3')
  |
  */
 
+const allEnv = require('dotenv').config().parsed
+const env = Object.keys(allEnv)
+  .filter(key => key.startsWith('MIX_'))
+  .reduce((all, curr) => ({ [curr]: allEnv[all], ...all }), {})
+
 mix
-  .vue3('resources/js/app.ts', 'public/js', {
-    typescript: true,
-  })
+  .ts('resources/js/app.ts', 'public/js')
+  .vue()
   .postCss('resources/css/app.css', 'public/css', [require('tailwindcss')])
   .sourceMaps(false)
   .version()
+  .webpackConfig(webpack => ({
+    plugins: [
+      new webpack.DefinePlugin({
+        'process.env': JSON.stringify(env),
+      }),
+    ],
+  }))
