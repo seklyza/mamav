@@ -30,6 +30,7 @@
       <a
         href="javascript:void(0)"
         class="ml-3 w-4 inline cursor-pointer text-red-500 font-bold"
+        v-if="join_secret"
         @click="generateANewLink"
       >
         Generate a New Link and Copy to Clipboard
