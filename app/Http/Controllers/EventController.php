@@ -93,7 +93,7 @@ class EventController extends Controller
     {
         $user = Auth::user();
 
-        if ($event->organizer_id === $user->id) {
+        if ($user->can('delete', $event)) {
             $event->delete();
         } else {
             $event->participants()->detach($user);

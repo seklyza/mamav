@@ -22,14 +22,24 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn () => redirect()->route('events'))->name('index');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
-    Route::get('/events', [EventController::class, 'upcomingEvents'])->name('events');
-    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
-    Route::post('/events/create', [EventController::class, 'store'])->name('events.store');
-    Route::delete('/events/{event}', [EventController::class, 'delete'])->name('events.delete');
-    Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
-    Route::post('/events/{event}/link', [EventController::class, 'generateLink'])->name('events.generate-link');
-    Route::delete('/events/{event}/participants/{participant}', [ParticipantController::class, 'delete'])->name('events.participants.delete');
-    Route::post('/events/{event}/participants/{participant}/make-organizer', [ParticipantController::class, 'makeOrganizer'])->name('events.participants.make-organizer');
+    Route::prefix('/events')->name('events')->group(function () {
+        Route::get('', [EventController::class, 'upcomingEvents'])->name('');
+        Route::get('/create', [EventController::class, 'create'])->name('.create');
+        Route::post('/create', [EventController::class, 'store'])->name('.store');
+
+        Route::delete('/{event}', [EventController::class, 'delete'])->name('.delete');
+        Route::get('/{event}', [EventController::class, 'show'])->name('.show');
+
+        Route::prefix('/{event}')->middleware('can:update,event')->group(function () {
+            Route::post('/link', [EventController::class, 'generateLink'])
+                ->name('.generate-link');
+            Route::delete('/participants/{participant}', [ParticipantController::class, 'delete'])
+                ->name('.participants.delete');
+            Route::post('/participants/{participant}/make-organizer', [ParticipantController::class, 'makeOrganizer'])
+                ->name('.participants.make-organizer');
+        });
+    });
+
     Route::get('/my-events', [EventController::class, 'myEvents'])->name('my-events');
     Route::get('/previous-events', [EventController::class, 'previousEvents'])->name('previous-events');
     Route::inertia('/settings', 'Settings')->name('settings');

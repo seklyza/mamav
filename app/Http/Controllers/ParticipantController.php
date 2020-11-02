@@ -12,7 +12,7 @@ class ParticipantController extends Controller
     {
         $user = Auth::user();
 
-        if ($event->organizer_id === $user->id && $event->participants()->find($participant->id)) {
+        if ($user->can('update', $event) && $event->participants()->find($participant->id)) {
             $event->participants()->detach($participant);
         }
 
@@ -23,7 +23,7 @@ class ParticipantController extends Controller
     {
         $user = Auth::user();
 
-        if ($event->organizer_id === $user->id && $event->participants()->find($participant->id)) {
+        if ($user->can('update', $event) && $event->participants()->find($participant->id)) {
             $event->organizer_id = $participant->id;
             $event->save();
         }
