@@ -32,7 +32,7 @@ class ParticipantTest extends TestCase
         /** @var User */ [, $user, $participant] = $event->participants()->get()->where('id', '!=', $event->organizer_id)->all();
 
         $response = $this->actingAs($user)->delete(route('events.participants.delete', [$event->id, $participant->id]));
-        $response->assertRedirect(route('events.show', $event->id));
+        $response->assertStatus(403);
 
         $this->assertDatabaseHas('event_participant', ['event_id' => $event->id, 'participant_id' => $participant->id]);
     }
@@ -60,7 +60,7 @@ class ParticipantTest extends TestCase
         /** @var User */ [, $user, $newOrganizer] = $event->participants()->get()->where('id', '!=', $event->organizer_id)->all();
 
         $response = $this->actingAs($user)->post(route('events.participants.make-organizer', [$event->id, $newOrganizer->id]));
-        $response->assertRedirect(route('events.show', $event->id));
+        $response->assertStatus(403);
 
         $this->assertNotEquals($event->organizer_id, $newOrganizer->id);
     }
