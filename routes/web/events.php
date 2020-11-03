@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ParticipantController;
 
@@ -19,7 +20,12 @@ Route::prefix('/events')->name('events')->group(function () {
             ->name('.participants.delete');
         Route::post('/participants/{participant}/make-organizer', [ParticipantController::class, 'makeOrganizer'])
             ->name('.participants.make-organizer');
+
+        Route::get('/items', [ItemController::class, 'index'])
+            ->name('.items');
     });
+
+    Route::post('/{event}/items', [ItemController::class, 'addItem'])->name('.items.store');
 });
 
 Route::get('/my-events', [EventController::class, 'myEvents'])->name('my-events');

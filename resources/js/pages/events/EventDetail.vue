@@ -1,7 +1,7 @@
 <template>
-  <main-layout>
+  <main-layout :title="event.name">
     <div class="w-full">
-      <h1 class="font-bold text-3xl mb-2">{{ event.name }}</h1>
+      <base-title>{{ event.name }}</base-title>
       <div>
         <span
           class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
@@ -82,6 +82,14 @@
         {{ isOwnerOfEvent ? 'Leave and Delete' : 'Leave' }}
         Event
       </button>
+      <base-button
+        btnType="inertia-link"
+        class="p-3 ml-3 cursor-pointer"
+        v-if="isOwnerOfEvent"
+        :href="route('events.items', event.id)"
+      >
+        Manage Items
+      </base-button>
     </div>
   </main-layout>
 </template>
