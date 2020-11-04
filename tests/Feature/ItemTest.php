@@ -43,9 +43,9 @@ class ItemTest extends TestCase
     public function testRemoveItemFromEvent()
     {
         $this->seed();
-        /** @var Event */ $event = Event::first();
+        /** @var Item */ $item = Item::get()->random();
+        $event = $item->event;
         $user = $event->organizer;
-        /** @var Item */ $item = $event->items()->get()->random();
 
         $response = $this->actingAs($user)->delete(route('events.items.delete', [$event->id, $item->id]));
 
@@ -57,9 +57,9 @@ class ItemTest extends TestCase
     public function testRemoveItemFromEventNotAsOrganizer()
     {
         $this->seed();
-        /** @var Event */ $event = Event::first();
+        /** @var Item */ $item = Item::get()->random();
+        $event = $item->event;
         $user = $event->participants()->get()->where('id', '!=', $event->organizer_id)->random();
-        /** @var Item */ $item = $event->items()->get()->random();
 
         $response = $this->actingAs($user)->delete(route('events.items.delete', [$event->id, $item->id]));
 
