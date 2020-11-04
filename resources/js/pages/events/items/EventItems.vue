@@ -72,6 +72,12 @@ export default {
 
     function removeItem(item: Event['items'][number]) {
       if (confirm(`Are you sure you want to remove ${item.name}?`)) {
+        Inertia.delete(
+          route('events.items.delete', {
+            event: props.event.id,
+            item: item.id,
+          }).toString(),
+        )
       }
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteItemRequest;
 use App\Http\Requests\Items\AddItemRequest;
 use App\Models\Item;
 use App\Models\Event;
@@ -23,5 +24,13 @@ class ItemController extends Controller
         $item->save();
 
         return redirect()->route('events.items', $event->id);
+    }
+
+    public function deleteItem(DeleteItemRequest $request)
+    {
+        /** @var int */ $itemId = $request->route('item');
+        Item::find($itemId)->delete();
+
+        return redirect()->route('events.items', $request->route('event'));
     }
 }

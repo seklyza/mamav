@@ -26,6 +26,7 @@ Route::prefix('/events')->name('events')->group(function () {
     });
 
     Route::post('/{event}/items', [ItemController::class, 'addItem'])->name('.items.store');
+    Route::delete('/{event}/items/{item}', [ItemController::class, 'deleteItem'])->name('.items.delete');
 });
 
 Route::get('/my-events', [EventController::class, 'myEvents'])->name('my-events');
