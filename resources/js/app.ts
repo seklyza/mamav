@@ -24,11 +24,7 @@ const app = createApp({
     }),
 }).use(interiaPlugin)
 
-app.mixin({
-  methods: {
-    route: window.route,
-  },
-})
+app.mixin({ methods: { route } })
 
 const files = require.context('./components/base', true, /\.vue$/i)
 files

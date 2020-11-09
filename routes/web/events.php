@@ -20,12 +20,12 @@ Route::prefix('/events')->name('events')->group(function () {
             ->name('.participants.delete');
         Route::post('/participants/{participant}/make-organizer', [ParticipantController::class, 'makeOrganizer'])
             ->name('.participants.make-organizer');
-
-        Route::get('/items', [ItemController::class, 'index'])
-            ->name('.items');
     });
 
+    Route::get('/{event}/items', [ItemController::class, 'index'])
+            ->name('.items');
     Route::post('/{event}/items', [ItemController::class, 'addItem'])->name('.items.store');
+    Route::put('/{event}/items/{item}', [ItemController::class, 'updateQuantity'])->name('.items.update-quantity');
     Route::delete('/{event}/items/{item}', [ItemController::class, 'deleteItem'])->name('.items.delete');
 });
 

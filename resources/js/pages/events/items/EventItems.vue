@@ -1,7 +1,7 @@
 <template>
   <main-layout :title="event.name">
     <base-title>Items for {{ event.name }}</base-title>
-    <form @submit.prevent="addItem">
+    <form @submit.prevent="addItem" v-if="canUpdate">
       <input
         placeholder="Add a new item..."
         class="p-4 w-4/5 mr-4 shadow-md outline-none"
@@ -14,46 +14,39 @@
       <p v-if="newItem.error" class="mt-3 text-red-500">{{ newItem.error }}</p>
     </form>
     <ul class="mt-8">
-      <li
+      <event-item
         v-for="item in event.items"
         :key="item.id"
-        class="mb-4 p-4 border shadow-md"
-      >
-        <div class="inline">
-          <span class="font-semibold">
-            <span class="text-green-500">{{ item.quantity }}</span>
-            {{ item.name }}&nbsp;
-          </span>
-          <span v-if="item.description" class="text-gray-600">
-            {{ item.description }}
-          </span>
-        </div>
-        <x-icon
-          class="w-5 inline cursor-pointer text-red-500 float-right"
-          @click="removeItem(item)"
-        ></x-icon>
-      </li>
+        :event-id="event.id"
+        :item="item"
+        :can-update="canUpdate"
+      ></event-item>
     </ul>
   </main-layout>
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue'
+import { defineComponent, PropType, reactive, toRefs } from 'vue'
 import { Event } from '@/types'
 import { Inertia } from '@inertiajs/inertia'
 
-type Props = {
-  event: Event
-}
+import EventItem from '@/components/items/EventItem.vue'
 
-export default {
+export default defineComponent({
+  components: {
+    EventItem,
+  },
   props: {
     event: {
-      type: Object,
+      type: Object as PropType<Event>,
+      required: true,
+    },
+    canUpdate: {
+      type: Boolean,
       required: true,
     },
   },
-  setup(props: Props) {
+  setup(props) {
     const form = reactive<{ newItem: { val: string; error: string | null } }>({
       newItem: {
         val: '',
@@ -74,23 +67,11 @@ export default {
       Inertia.post(route('events.items.store', props.event.id), formData)
     }
 
-    function removeItem(item: NonNullable<Event['items']>[number]) {
-      if (confirm(`Are you sure you want to remove ${item.name}?`)) {
-        Inertia.delete(
-          route('events.items.delete', {
-            event: props.event.id,
-            item: item.id,
-          }).toString(),
-        )
-      }
-    }
-
     return {
       ...toRefs(form),
 
       addItem,
-      removeItem,
     }
   },
-}
+})
 </script>

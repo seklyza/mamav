@@ -13,4 +13,4 @@ declare module '@inertiajs/inertia-vue3' {
   }> {}
 }
 
-declare var route: any
+declare const route: any
