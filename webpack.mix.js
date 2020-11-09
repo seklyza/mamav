@@ -1,3 +1,4 @@
+const path = require('path')
 const mix = require('laravel-mix')
 
 /*
@@ -11,21 +12,18 @@ const mix = require('laravel-mix')
  |
  */
 
-const allEnv = require('dotenv').config().parsed
-const env = Object.keys(allEnv)
-  .filter(key => key.startsWith('MIX_'))
-  .reduce((all, curr) => ({ [curr]: allEnv[all], ...all }), {})
-
 mix
-  .ts('resources/js/app.ts', 'public/js')
+  .ts('resources/js/app.ts', 'public/dist/js')
   .vue()
-  .postCss('resources/css/app.css', 'public/css', [require('tailwindcss')])
+  .postCss('resources/css/app.css', 'public/dist/css', [require('tailwindcss')])
   .sourceMaps(false)
   .version()
-  .webpackConfig(webpack => ({
-    plugins: [
-      new webpack.DefinePlugin({
-        'process.env': JSON.stringify(env),
-      }),
-    ],
-  }))
+  .extract()
+  .webpackConfig({
+    output: {
+      chunkFilename: 'dist/js/chunks/[chunkhash].js',
+    },
+  })
+  .alias({
+    '@': path.resolve(__dirname, 'resources', 'js'),
+  })

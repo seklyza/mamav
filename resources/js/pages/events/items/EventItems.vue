@@ -38,19 +38,23 @@
 </template>
 
 <script lang="ts">
-import { PropType, reactive, toRefs } from 'vue'
+import { reactive, toRefs } from 'vue'
 import { Event } from '@/types'
 import { Inertia } from '@inertiajs/inertia'
+
+type Props = {
+  event: Event
+}
 
 export default {
   props: {
     event: {
-      type: Object as PropType<Event>,
+      type: Object,
       required: true,
     },
   },
-  setup(props) {
-    const form = reactive({
+  setup(props: Props) {
+    const form = reactive<{ newItem: { val: string; error: string | null } }>({
       newItem: {
         val: '',
         error: null,
@@ -70,7 +74,7 @@ export default {
       Inertia.post(route('events.items.store', props.event.id), formData)
     }
 
-    function removeItem(item: Event['items'][number]) {
+    function removeItem(item: NonNullable<Event['items']>[number]) {
       if (confirm(`Are you sure you want to remove ${item.name}?`)) {
         Inertia.delete(
           route('events.items.delete', {

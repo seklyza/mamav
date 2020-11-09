@@ -19,7 +19,7 @@ const app = createApp({
           )
           .join('/')
 
-        return require(`./pages/${path}`).default
+        return import(`./pages/${path}`).then(m => m.default)
       },
     }),
 }).use(interiaPlugin)
@@ -37,11 +37,22 @@ files
     app.component(key.split('/').pop()!.split('.')[0], files(key).default),
   )
 
-const mapsAPI = document.createElement('script')
-mapsAPI.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.MIX_GOOGLE_MAPS_API_TOKEN}&callback=initMap`
-mapsAPI.defer = true
-document.body.appendChild(mapsAPI)
+if (process.env.MIX_GOOGLE_MAPS_ENABLED === 'true') {
+  const mapsAPI = document.createElement('script')
+  mapsAPI.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.MIX_GOOGLE_MAPS_API_TOKEN}&callback=initMap`
+  mapsAPI.defer = true
+  document.body.appendChild(mapsAPI)
 
-void ((window as any).initMap = async function () {
+  void ((window as any).initMap = () => {
+    app.mount(el)
+  })
+} else {
+  void ((window as any).google = {
+    maps: {
+      Geocoder: class {
+        geocode() {}
+      },
+    },
+  }) // mock google API for development
   app.mount(el)
-})
+}

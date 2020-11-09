@@ -3,9 +3,6 @@ require('regenerator-runtime/runtime')
 
 window._ = require('lodash')
 
-window.Ziggy = require('../assets/js/ziggy').Ziggy
-window.route = require('ziggy-js')
-
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
