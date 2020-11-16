@@ -11,7 +11,7 @@ declare module '@vue/runtime-core' {
   }
 }
 
-InertiaProgress.init()
+InertiaProgress.init({ delay: 50 })
 
 const el = document.getElementById('app')!
 

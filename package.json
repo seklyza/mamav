@@ -30,9 +30,9 @@
     "vue-loader": "^16.0.0-beta.8"
   },
   "dependencies": {
-    "@inertiajs/inertia": "^0.4.3",
-    "@inertiajs/inertia-vue3": "^0.1.1",
-    "@inertiajs/progress": "^0.1.2",
+    "@inertiajs/inertia": "^0.6.2",
+    "@inertiajs/inertia-vue3": "^0.2.2",
+    "@inertiajs/progress": "^0.2.2",
     "core-js": "^3.6.5",
     "dayjs": "^1.9.3",
     "regenerator-runtime": "^0.13.7",

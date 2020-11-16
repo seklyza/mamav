@@ -4,8 +4,6 @@ declare module '*.vue' {
   export default component
 }
 
-declare module '@inertiajs/progress'
-
 type PageProps<T> = T & {
   errors: { [key: string]: string }
   auth: { user?: import('@/types').User }
