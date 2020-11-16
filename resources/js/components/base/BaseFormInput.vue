@@ -43,7 +43,7 @@ export default defineComponent({
     },
     max: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   emits: ['update:modelValue'],
