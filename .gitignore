@@ -18,3 +18,4 @@ _ide_helper_models.php
 
 public/dist
 public/mix-manifest.json
+resources/js/generated

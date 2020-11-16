@@ -29,7 +29,7 @@
       </div>
       <div>
         <span class="text-white mr-2"
-          >Hello, {{ $page.props.auth.user.name }}</span
+          >Hello, {{ $page.props.auth.user?.name }}</span
         >
         <button
           @click="logout"

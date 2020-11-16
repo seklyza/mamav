@@ -8,13 +8,21 @@
   </ul>
 </template>
 
-<script>
-import EventCard from './EventCard'
+<script lang="ts">
+import { Event } from '@/types'
+import { defineComponent, PropType } from 'vue'
 
-export default {
+import EventCard from './EventCard.vue'
+
+export default defineComponent({
   components: {
     EventCard,
   },
-  props: ['events'],
-}
+  props: {
+    events: {
+      type: Array as PropType<Event[]>,
+      required: true,
+    },
+  },
+})
 </script>

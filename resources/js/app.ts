@@ -2,6 +2,14 @@ import './bootstrap'
 import { InertiaProgress } from '@inertiajs/progress'
 import { createApp, h } from 'vue'
 import { App, plugin as interiaPlugin } from '@inertiajs/inertia-vue3'
+import { Page } from '@inertiajs/inertia'
+
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+    route: typeof route
+    $page: Page<PageProps<unknown>>
+  }
+}
 
 InertiaProgress.init()
 

@@ -9,18 +9,20 @@
   </main-layout>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
-import EventsList from '../../components/events/EventsList.vue'
+import EventsList from '@/components/events/EventsList.vue'
 
-export function visitCreateEvent() {
-  Inertia.visit(route('events.create'))
-}
-
-export default {
+export default defineComponent({
   props: ['events'],
   components: {
     EventsList,
   },
-}
+  methods: {
+    visitCreateEvent() {
+      Inertia.visit(route('events.create'))
+    },
+  },
+})
 </script>

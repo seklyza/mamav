@@ -1,6 +1,12 @@
 require('core-js/stable')
 require('regenerator-runtime/runtime')
 
+const route = require('ziggy')
+const { Ziggy } = require('./generated/ziggy')
+
+window.route = (name, params, absolute, config = Ziggy) =>
+  route(name, params, absolute, config)
+
 window._ = require('lodash')
 
 /**

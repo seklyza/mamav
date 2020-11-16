@@ -18,23 +18,34 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   props: {
-    name: String,
+    name: {
+      type: String,
+      required: true,
+    },
     type: {
       type: String,
       required: false,
       default: 'text',
     },
-    label: String,
+    label: {
+      type: String,
+      required: true,
+    },
     modelValue: String,
     showErrors: {
       type: Boolean,
       default: true,
     },
-    max: String,
+    max: {
+      type: String,
+      required: true,
+    },
   },
   emits: ['update:modelValue'],
-}
+})
 </script>

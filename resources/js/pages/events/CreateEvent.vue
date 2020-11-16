@@ -45,51 +45,59 @@
   </main-layout>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
 import _debounce from 'lodash/debounce'
 
 import SimpleMap from '../../components/maps/SimpleMap.vue'
 import { Inertia } from '@inertiajs/inertia'
-import { reactive } from 'vue'
+import { defineComponent, reactive } from 'vue'
 
-export const form = reactive({
-  name: '',
-  description: '',
-  date: '',
-  time: '',
-  location: '',
-})
-
-export function onSubmit() {
-  const datetime = (() => {
-    try {
-      const datetime = new Date(form.date)
-      const [hours, minutes] = form.time.split(':')
-      datetime.setHours(hours as any)
-      datetime.setMinutes(minutes as any)
-      return datetime
-    } catch (e) {
-      return ''
-    }
-  })()
-
-  const formData = {
-    name: form.name,
-    description: form.description,
-    datetime,
-    location: form.location,
-  }
-
-  Inertia.post(route('events.store'), formData)
-}
-
-export const onLocationUpdate = _debounce(e => {
-  form.location = e.target.value
-}, 1000)
-
-export default {
+export default defineComponent({
   components: {
     SimpleMap,
   },
-}
+  setup() {
+    const form = reactive({
+      name: '',
+      description: '',
+      date: '',
+      time: '',
+      location: '',
+    })
+
+    function onSubmit() {
+      const datetime = (() => {
+        try {
+          const datetime = new Date(form.date)
+          const [hours, minutes] = form.time.split(':')
+          datetime.setHours(hours as any)
+          datetime.setMinutes(minutes as any)
+          return datetime
+        } catch (e) {
+          return ''
+        }
+      })()
+
+      const formData = {
+        name: form.name,
+        description: form.description,
+        datetime,
+        location: form.location,
+      }
+
+      Inertia.post(route('events.store'), formData)
+    }
+
+    const onLocationUpdate = _debounce(e => {
+      form.location = e.target.value
+    }, 1000)
+
+    return {
+      form,
+
+      onSubmit,
+      onLocationUpdate,
+    }
+  },
+})
 </script>

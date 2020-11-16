@@ -34,18 +34,28 @@
   </auth-layout>
 </template>
 
-<script lang="ts" setup>
-import { reactive } from 'vue'
+<script lang="ts">
+import { defineComponent, reactive } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 
-export const form = reactive({
-  username: '',
-  password: '',
+export default defineComponent({
+  setup() {
+    const form = reactive({
+      username: '',
+      password: '',
+    })
+
+    function onSubmit() {
+      const formData = { ...form }
+
+      Inertia.post(route('login.store'), formData)
+    }
+
+    return {
+      form,
+
+      onSubmit,
+    }
+  },
 })
-
-export function onSubmit() {
-  const formData = { ...form }
-
-  Inertia.post(route('login.store'), formData)
-}
 </script>

@@ -59,29 +59,39 @@
   </auth-layout>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
 import { Inertia } from '@inertiajs/inertia'
-import { reactive } from 'vue'
+import { defineComponent, reactive } from 'vue'
 
-export const form = reactive({
-  name: '',
-  email: '',
-  username: '',
-  password: '',
-  confirmPassword: '',
-})
+export default defineComponent({
+  setup() {
+    const form = reactive({
+      name: '',
+      email: '',
+      username: '',
+      password: '',
+      confirmPassword: '',
+    })
 
-export function onSubmit() {
-  if (route().current('register')) {
-    const formData = {
-      name: form.name,
-      email: form.email,
-      username: form.username,
-      password: form.password,
-      password_confirmation: form.confirmPassword,
+    function onSubmit() {
+      if (route().current('register')) {
+        const formData = {
+          name: form.name,
+          email: form.email,
+          username: form.username,
+          password: form.password,
+          password_confirmation: form.confirmPassword,
+        }
+
+        Inertia.post(route('register.store'), formData)
+      }
     }
 
-    Inertia.post(route('register.store'), formData)
-  }
-}
+    return {
+      form,
+
+      onSubmit,
+    }
+  },
+})
 </script>

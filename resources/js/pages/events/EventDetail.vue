@@ -41,7 +41,7 @@
       <h2 class="text-2xl font-bold mb-4">Event Participants:</h2>
       <ul>
         <li
-          v-for="participant in event.participants"
+          v-for="participant in event.participants || []"
           :key="participant.id"
           class="shadow-md mb-4 p-4"
         >
@@ -94,8 +94,8 @@
   </main-layout>
 </template>
 
-<script lang="ts" setup="props">
-import { computed } from 'vue'
+<script lang="ts">
+import { defineComponent, computed, PropType } from 'vue'
 
 import SimpleMap from '../../components/maps/SimpleMap.vue'
 import { Event, User } from '../../types'
@@ -103,92 +103,107 @@ import { formatDateTime } from '../../utils/date'
 import { copyToClipboard } from '../../utils/clipboard'
 import { Inertia } from '@inertiajs/inertia'
 
-declare const props: {
-  event: Event
-  join_secret?: string
-  auth: {
-    user: User
-  }
-}
-
-export const formattedDateTime = computed(() =>
-  formatDateTime(props.event.datetime),
-)
-
-export const isOwnerOfEvent = computed(
-  () => props.auth.user.id === props.event.organizer_id,
-)
-
-export function copyLinkToClipboard() {
-  const inviteLink = route('events.show', {
-    event: props.event.id,
-    link: props.join_secret,
-  }).toString()
-
-  copyToClipboard(inviteLink)
-}
-
-export function leaveEvent() {
-  if (confirm('Are you sure you want to leave this event?')) {
-    Inertia.delete(route('events.delete', props.event.id))
-  }
-}
-
-export function makeEventOrganizer(
-  participant: NonNullable<typeof props['event']['participants']>[number],
-) {
-  if (
-    confirm(
-      `Are you sure you want to make ${participant.name} the organizer of this event?`,
-    )
-  ) {
-    Inertia.post(
-      route('events.participants.make-organizer', [
-        props.event.id,
-        participant.id,
-      ]),
-      {},
-      { preserveScroll: true },
-    )
-  }
-}
-
-export function removeParticipant(
-  participant: NonNullable<typeof props['event']['participants']>[number],
-) {
-  if (
-    confirm(
-      `Are you sure you want to remove ${participant.name} from the event?`,
-    )
-  ) {
-    Inertia.delete(
-      route('events.participants.delete', [props.event.id, participant.id]),
-      { preserveScroll: true },
-    )
-  }
-}
-
-export async function generateANewLink() {
-  if (
-    confirm(
-      `Are you sure you want to revoke the current link and generate a new one?
-The new link will be copied to your clipboard.`,
-    )
-  ) {
-    await Inertia.post(
-      route('events.generate-link', props.event.id),
-      {},
-      {
-        preserveScroll: true,
-        onSuccess: copyLinkToClipboard,
-      },
-    )
-  }
-}
-
-export default {
+export default defineComponent({
   components: {
     SimpleMap,
   },
-}
+  props: {
+    event: {
+      type: Object as PropType<Event>,
+      required: true,
+    },
+    join_secret: String,
+    auth: {
+      type: Object as PropType<{ user: User }>,
+      required: true,
+    },
+  },
+  setup(props) {
+    const formattedDateTime = computed(() =>
+      formatDateTime(props.event.datetime),
+    )
+
+    const isOwnerOfEvent = computed(
+      () => props.auth.user.id === props.event.organizer_id,
+    )
+
+    function copyLinkToClipboard() {
+      const inviteLink = route('events.show', {
+        event: props.event.id,
+        link: props.join_secret,
+      }).toString()
+
+      copyToClipboard(inviteLink)
+    }
+
+    function leaveEvent() {
+      if (confirm('Are you sure you want to leave this event?')) {
+        Inertia.delete(route('events.delete', props.event.id))
+      }
+    }
+
+    function makeEventOrganizer(
+      participant: NonNullable<typeof props['event']['participants']>[number],
+    ) {
+      if (
+        confirm(
+          `Are you sure you want to make ${participant.name} the organizer of this event?`,
+        )
+      ) {
+        Inertia.post(
+          route('events.participants.make-organizer', [
+            props.event.id,
+            participant.id,
+          ]),
+          {},
+          { preserveScroll: true },
+        )
+      }
+    }
+
+    function removeParticipant(
+      participant: NonNullable<typeof props['event']['participants']>[number],
+    ) {
+      if (
+        confirm(
+          `Are you sure you want to remove ${participant.name} from the event?`,
+        )
+      ) {
+        Inertia.delete(
+          route('events.participants.delete', [props.event.id, participant.id]),
+          { preserveScroll: true },
+        )
+      }
+    }
+
+    async function generateANewLink() {
+      if (
+        confirm(
+          `Are you sure you want to revoke the current link and generate a new one?
+The new link will be copied to your clipboard.`,
+        )
+      ) {
+        await Inertia.post(
+          route('events.generate-link', props.event.id),
+          {},
+          {
+            preserveScroll: true,
+            onSuccess: copyLinkToClipboard,
+          },
+        )
+      }
+    }
+
+    return {
+      formattedDateTime,
+      isOwnerOfEvent,
+
+      copyLinkToClipboard,
+      leaveEvent,
+      makeEventOrganizer,
+      removeParticipant,
+      generateANewLink,
+    }
+  },
+})
 </script>

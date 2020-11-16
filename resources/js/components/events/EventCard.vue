@@ -27,35 +27,65 @@
   </li>
 </template>
 
-<script lang="ts" setup="props">
+<script lang="ts">
 import { formatDateTime } from '../../utils/date'
 import SimpleMap from '../maps/SimpleMap.vue'
-import { computed } from 'vue'
+import { defineComponent, computed } from 'vue'
 
-declare const props: {
-  id: number
-  name: string
-  description: string
-  datetime: string
-  location: string
-  organizer_id: number
-  created_at: string
-  updated_at: string
-}
-
-export const formattedDateTime = computed(() => formatDateTime(props.datetime))
-export const shortDescription = computed(() => {
-  if (props.description.length <= 50) {
-    return props.description
-  }
-  const first30 = props.description.substring(0, 50).split(' ')
-  first30.pop()
-  return first30.join(' ') + '.........'
-})
-
-export default {
+export default defineComponent({
   components: {
     SimpleMap,
   },
-}
+  props: {
+    id: {
+      type: Number,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    datetime: {
+      type: String,
+      required: true,
+    },
+    location: {
+      type: String,
+      required: true,
+    },
+    organizer_id: {
+      type: Number,
+      required: true,
+    },
+    created_at: {
+      type: String,
+      required: true,
+    },
+    updated_at: {
+      type: String,
+      required: true,
+    },
+  },
+  setup(props) {
+    const formattedDateTime = computed(() => formatDateTime(props.datetime))
+
+    const shortDescription = computed(() => {
+      if (props.description.length <= 50) {
+        return props.description
+      }
+      const first30 = props.description.substring(0, 50).split(' ')
+      first30.pop()
+      return first30.join(' ') + '.........'
+    })
+
+    return {
+      formattedDateTime,
+      shortDescription,
+    }
+  },
+})
 </script>

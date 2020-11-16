@@ -18,15 +18,29 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   props: {
-    name: String,
-    rows: String,
-    cols: String,
-    label: String,
+    name: {
+      type: String,
+      required: true,
+    },
+    rows: {
+      type: String,
+      required: true,
+    },
+    cols: {
+      type: String,
+      required: true,
+    },
+    label: {
+      type: String,
+      required: true,
+    },
     modelValue: String,
   },
   emits: ['update:modelValue'],
-}
+})
 </script>

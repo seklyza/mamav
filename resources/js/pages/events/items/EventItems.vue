@@ -15,7 +15,7 @@
     </form>
     <ul class="mt-8">
       <event-item
-        v-for="item in event.items"
+        v-for="item in event.items || []"
         :key="item.id"
         :event-id="event.id"
         :item="item"

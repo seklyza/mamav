@@ -1,16 +1,24 @@
 const path = require('path')
+const { exec } = require('child_process')
 const mix = require('laravel-mix')
 
-/*
- |--------------------------------------------------------------------------
- | Mix Asset Management
- |--------------------------------------------------------------------------
- |
- | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel applications. By default, we are compiling the CSS
- | file for the application as well as bundling up all the JS files.
- |
- */
+mix.extend('ziggy', {
+  boot() {
+    const command = () =>
+      exec('php artisan ziggy:generate resources/js/generated/ziggy.js')
+
+    command()
+
+    if (Mix.isWatching()) {
+      require('chokidar')
+        .watch('routes/**/*.php')
+        .on('change', path => {
+          console.log(`${path} has been changed!`)
+          command()
+        })
+    }
+  },
+})
 
 mix
   .ts('resources/js/app.ts', 'public/dist/js')
@@ -23,7 +31,11 @@ mix
     output: {
       chunkFilename: 'dist/js/chunks/[chunkhash].js',
     },
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'resources', 'js'),
+        ziggy: path.resolve(__dirname, 'vendor', 'tightenco', 'ziggy', 'dist'),
+      },
+    },
   })
-  .alias({
-    '@': path.resolve(__dirname, 'resources', 'js'),
-  })
+  .ziggy()

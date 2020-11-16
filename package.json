@@ -37,7 +37,6 @@
     "dayjs": "^1.9.3",
     "regenerator-runtime": "^0.13.7",
     "tailwindcss": "^1.8.12",
-    "vue": "^3.0.1",
-    "ziggy-js": "^0.9.4"
+    "vue": "^3.0.1"
   }
 }
