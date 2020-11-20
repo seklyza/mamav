@@ -19,6 +19,6 @@ declare module '@inertiajs/inertia-vue3' {
   > {}
 }
 
-declare module 'ziggy'
-
-declare const route: any
+type Routes = keyof typeof import('@/generated/ziggy').Ziggy['routes']
+declare const route: ((name: Routes, params?: any) => string) &
+  (() => { current: (name: Routes) => boolean } & { current: () => Routes })

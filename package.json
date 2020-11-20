@@ -2,13 +2,13 @@
   "private": true,
   "scripts": {
     "dev": "npm run development",
-    "development": "mix",
-    "watch": "mix watch",
-    "watch-poll": "mix watch -- --watch-options-poll=1000",
-    "hot": "mix watch --hot",
-    "production": "mix --production",
+    "development": "npm run clean && mix",
+    "watch": "npm run clean && mix watch",
+    "watch-poll": "npm run clean && mix watch -- --watch-options-poll=1000",
+    "hot": "npm run clean && mix watch --hot",
+    "production": "npm run clean && mix --production",
     "prod": "npm run production",
-    "clean": "rimraf public/dist public/mix-manifest.json",
+    "clean": "rimraf public/dist public/mix-manifest.json resources/js/generated",
     "test": ""
   },
   "devDependencies": {
