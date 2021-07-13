@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17ee5c8a0771302dab033e5119c8c155",
+    "content-hash": "2c973920becd192b161f63900add500f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -839,23 +839,27 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "v0.3.3",
+            "version": "v0.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
-                "reference": "c1538774067b940d9fa21fea8c4d4e2faea24079"
+                "reference": "bfb6ddf0d3c1cc470f6d5b044631fffa48089c49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/c1538774067b940d9fa21fea8c4d4e2faea24079",
-                "reference": "c1538774067b940d9fa21fea8c4d4e2faea24079",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/bfb6ddf0d3c1cc470f6d5b044631fffa48089c49",
+                "reference": "bfb6ddf0d3c1cc470f6d5b044631fffa48089c49",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^5.4|^6.0|^7.0|^8.0"
+                "ext-json": "*",
+                "laravel/framework": "^5.4|^6.0|^7.0|^8.0",
+                "php": "^7.2|^8.0"
             },
             "require-dev": {
-                "orchestra/testbench": "~3.0"
+                "orchestra/testbench": "^4.0|^5.0|^6.0",
+                "phpunit/phpunit": "^8.0|^9.0",
+                "roave/security-advisories": "dev-master"
             },
             "type": "library",
             "extra": {
@@ -895,7 +899,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-29T11:38:41+00:00"
+            "time": "2021-07-12T14:09:58+00:00"
         },
         {
             "name": "laravel/framework",
@@ -1058,7 +1062,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-11-10T14:47:10+00:00"
+            "time": "2020-11-17T14:53:20+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -8212,12 +8216,12 @@
             "version": "1.9.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/webmozart/assert.git",
+                "url": "https://github.com/webmozarts/assert.git",
                 "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "shasum": ""
             },
